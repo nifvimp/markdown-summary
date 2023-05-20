@@ -16,6 +16,6 @@ public class StudySessionImpl implements StudySession {
 
   @Override
   public void write(Path output) {
-    //TODO: replace with writer
+    // TODO: replace with writer
   }
 }

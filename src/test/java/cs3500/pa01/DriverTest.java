@@ -26,6 +26,9 @@ public class DriverTest {
   public static void setup() {
     try {
       Files.delete(Path.of("src/test/resources/studyGuide.md"));
+    } catch (IOException ignored) {
+    }
+    try {
       BasicFileAttributeView arrays = Files.getFileAttributeView(
           Path.of("src/test/resources/notes/arrays.md"), BasicFileAttributeView.class
       );

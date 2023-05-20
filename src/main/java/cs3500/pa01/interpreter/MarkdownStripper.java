@@ -63,6 +63,7 @@ public class MarkdownStripper implements Interpreter<String, String> {
    *      the text falls under
    */
   private static List<String> splitByHeaders(List<String> fileContent, List<String> headers) {
+    // TODO: clean up
     if (headers.size() < 1) {
       return List.of(
           fileContent.stream().map(String::trim).collect(Collectors.joining(" "))
@@ -74,7 +75,7 @@ public class MarkdownStripper implements Interpreter<String, String> {
     StringBuilder currSplit = new StringBuilder();
     while (currLine < fileContent.size()) {
       String line = fileContent.get(currLine);
-      String header = headers.get(currHeader);
+      String header = (currHeader < headers.size()) ? headers.get(currHeader) : null; // clean up
       if (line.equals(header)) {
         content.add(currSplit.toString());
         currSplit = new StringBuilder();
@@ -84,6 +85,7 @@ public class MarkdownStripper implements Interpreter<String, String> {
       }
       currLine++;
     }
+    content.add(currSplit.toString()); // clean up
     return content;
   }
 

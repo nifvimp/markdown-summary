@@ -78,7 +78,7 @@ public abstract class OutputFile {
    * @param output path to file to be written to
    */
   public void write(Path output) {
-    //TODO: move to controller
+    // TODO: move to controller
     Writer writer;
     try {
       writer = WRITER_TYPE.getConstructor(new Class[] {Path.class}).newInstance(output);

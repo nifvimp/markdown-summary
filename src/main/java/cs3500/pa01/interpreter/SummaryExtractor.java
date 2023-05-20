@@ -15,6 +15,7 @@ public class SummaryExtractor extends MarkdownStripper {
    */
   @Override
   public List<String> interpret(List<String> fileContent) {
+    fileContent = super.interpret(fileContent);
     List<String> summary = new ArrayList<>();
     for (String line : fileContent) {
       if (isHeader(line) || isImportantPhrase(line) || isSpacing(line)) {

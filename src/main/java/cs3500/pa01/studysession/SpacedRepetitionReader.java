@@ -12,7 +12,7 @@ public class SpacedRepetitionReader {
   private final List<Problem> easyProblems = new ArrayList<>();
 
   public SpacedRepetitionReader(Path file) {
-    //TODO: read file and populate lists;
+    // TODO: read file and populate lists;
   }
 
   public List<Problem> getHardQuestions() {
