@@ -2,6 +2,8 @@ package cs3500.pa01;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import cs3500.pa01.notesparser.OrderingFlag;
+import cs3500.pa01.notesparser.Summary;
 import java.io.File;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;

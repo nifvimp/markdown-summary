@@ -1,5 +1,7 @@
 package cs3500.pa01;
 
+import cs3500.pa01.notesparser.OrderingFlag;
+import cs3500.pa01.notesparser.Summary;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;

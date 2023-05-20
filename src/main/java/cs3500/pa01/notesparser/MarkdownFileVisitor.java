@@ -1,5 +1,6 @@
-package cs3500.pa01;
+package cs3500.pa01.notesparser;
 
+import cs3500.pa01.Util;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -37,23 +38,23 @@ public class MarkdownFileVisitor implements FileVisitor<Path> {
     return new ArrayList<>(this.foundMarkdownFiles);
   }
 
-  /**
-   * Returns the file extension of the given file.
-   *
-   * @param file file to extract file extension from
-   * @return the file's file extension
-   * @throws IllegalArgumentException if the file does not have a file extension
-   */
-  private static String extractFileExtension(Path file) {
-    String filename = file.getFileName().toString();
-    int extensionStart = filename.lastIndexOf('.');
-    if (extensionStart < 0) {
-      throw new IllegalArgumentException(
-          "The file '" + file + "' does not have a file extension."
-      );
-    }
-    return filename.substring(extensionStart);
-  }
+//  /**
+//   * Returns the file extension of the given file.
+//   *
+//   * @param file file to extract file extension from
+//   * @return the file's file extension
+//   * @throws IllegalArgumentException if the file does not have a file extension
+//   */
+//  private static String extractFileExtension(Path file) {
+//    String filename = file.getFileName().toString();
+//    int extensionStart = filename.lastIndexOf('.');
+//    if (extensionStart < 0) {
+//      throw new IllegalArgumentException(
+//          String.format("The file '%s' does not have a file extension.", file)
+//      );
+//    }
+//    return filename.substring(extensionStart);
+//  }
 
   /**
    * Invoked for a file in a directory. Adds the visited file to this MarkdownFileVisitor's
@@ -70,7 +71,7 @@ public class MarkdownFileVisitor implements FileVisitor<Path> {
       return FileVisitResult.CONTINUE;
     }
     try {
-      if (extractFileExtension(file).equals(".md")) {
+      if (Util.extractFileExtension(file).equals(".md")) {
         this.foundMarkdownFiles.add(
             new MarkdownFile(file, file.getFileName().toString(),
                 attrs.lastModifiedTime(), attrs.creationTime())

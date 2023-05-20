@@ -1,4 +1,4 @@
-package cs3500.pa01;
+package cs3500.pa01.notesparser;
 
 /**
  * Flags that indicate how a summary document should be organized.

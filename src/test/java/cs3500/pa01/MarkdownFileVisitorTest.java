@@ -3,6 +3,8 @@ package cs3500.pa01;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import cs3500.pa01.notesparser.MarkdownFile;
+import cs3500.pa01.notesparser.MarkdownFileVisitor;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;

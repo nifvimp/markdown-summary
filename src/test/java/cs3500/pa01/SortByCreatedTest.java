@@ -2,6 +2,8 @@ package cs3500.pa01;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import cs3500.pa01.notesparser.MarkdownFile;
+import cs3500.pa01.notesparser.SortByCreated;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.text.ParseException;
