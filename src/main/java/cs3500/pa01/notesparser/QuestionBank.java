@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionBank extends OutputFile {
+
+  // TODO: find good place and way to make delimiter of questions public to all related classes
   /**
    * Constructs a question bank file from all the markdown files in the given root directory.
    *
