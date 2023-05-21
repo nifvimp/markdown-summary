@@ -47,6 +47,7 @@ public class StudySessionController implements Controller {
    * @param currProblem problem the session is currently on
    */
   private void chooseOption(Problem currProblem) {
+    //TODO: should it show option to show answer of answer was already shown?
     view.showOptions();
     switch(input.nextInt()) { // TODO: handle input mismatch
       case 1 -> view.showAnswer(currProblem);

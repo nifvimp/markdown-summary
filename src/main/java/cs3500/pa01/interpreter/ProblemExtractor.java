@@ -1,6 +1,7 @@
 package cs3500.pa01.interpreter;
 
 import cs3500.pa01.studysession.Difficulty;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +14,14 @@ public class ProblemExtractor extends MarkdownStripper {
   /**
    * Extracts all the question-answer blocks from the given markdown file content.
    *
-   * @param fileContent content of a markdown file to extract from
+   * @param file markdown file to extract from
    * @return result of extraction
    */
   @Override
-  public List<String> interpret(List<String> fileContent) {
-    fileContent = super.interpret(fileContent);
+  public List<String> extract(Path file) {
+    List<String> stripped = super.extract(file);
     List<String> questionBank = new ArrayList<>();
-    for (String line : fileContent) {
+    for (String line : stripped) {
       if (isProblem(line)) {
         String problem = toProblem(line);
         questionBank.add(problem);

@@ -22,4 +22,18 @@ public class SessionInfo {
   public SessionInfo(int problemTotal, int hardCount, int easyCount) {
     this(problemTotal, 0, hardCount, easyCount, 0, 0);
   }
+
+  public void easyChanged() {
+    answeredCount++;
+    hardCount++;
+    easyCount--;
+    easyChanged++;
+  }
+
+  public void hardChanged() {
+    answeredCount++;
+    hardCount--;
+    easyCount++;
+    hardChanged++;
+  }
 }

@@ -20,7 +20,7 @@ public abstract class OutputFile {
   /**
    * Markdown to output file interpreter.
    */
-  private final MarkdownStripper interpreter;
+  private final MarkdownStripper extractor;
   /**
    * The root directory of this output file.
    */
@@ -29,11 +29,11 @@ public abstract class OutputFile {
   /**
    * Creates a output file based on the given root and given interpreter.
    *
-   * @param interpreter markdown to output file interpreter
+   * @param extractor markdown to output file interpreter
    * @param root root directory of output file
    */
-  public OutputFile(MarkdownStripper interpreter, Path root) {
-    this.interpreter = interpreter;
+  public OutputFile(MarkdownStripper extractor, Path root) {
+    this.extractor = extractor;
     this.root = root;
   }
 
@@ -63,13 +63,7 @@ public abstract class OutputFile {
    * @return list of Strings that represent the stripped contents of the markdown file
    */
   protected List<String> strip(Path file) {
-    List<String> lines;
-    try {
-      lines = Files.readAllLines(file);
-    } catch (IOException e) {
-      throw new RuntimeException(String.format("Error reading file '%s'", file), e);
-    }
-    return interpreter.interpret(lines);
+    return extractor.extract(file);
   }
 
   /**

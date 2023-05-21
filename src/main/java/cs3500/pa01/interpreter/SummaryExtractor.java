@@ -1,5 +1,6 @@
 package cs3500.pa01.interpreter;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +11,14 @@ public class SummaryExtractor extends MarkdownStripper {
   /**
    * Extracts all the headers and important phrases from the given markdown file content.
    *
-   * @param fileContent content of a markdown file to extract from
+   * @param file markdown file to extract from
    * @return result of extraction
    */
   @Override
-  public List<String> interpret(List<String> fileContent) {
-    fileContent = super.interpret(fileContent);
+  public List<String> extract(Path file) {
+    List<String> stripped = super.extract(file);
     List<String> summary = new ArrayList<>();
-    for (String line : fileContent) {
+    for (String line : stripped) {
       if (isHeader(line) || isSpacing(line)) {
         summary.add(line);
       } else if (isImportantPhrase(line)) {
