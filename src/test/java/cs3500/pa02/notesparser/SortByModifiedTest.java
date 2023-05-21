@@ -1,0 +1,80 @@
+package cs3500.pa02.notesparser;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Tests sorting by last modified time.
+ */
+public class SortByModifiedTest {
+  List<MarkdownFile> files;
+  MarkdownFile arrays;
+  MarkdownFile vectors;
+  MarkdownFile regex;
+  MarkdownFile regexDup;
+  MarkdownFile formatting;
+
+
+  /**
+   * Sets up fake files to be sorted.
+   *
+   * @throws ParseException if code is incorrect
+   */
+  @BeforeEach
+  public void setup() throws ParseException {
+    files = new ArrayList<>();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    arrays = new MarkdownFile(
+        Path.of("src/test/resources/extendedNotes/arrays.md"),
+        "arrays.md",
+        FileTime.fromMillis(sdf.parse("3/2/2023").getTime()),
+        FileTime.fromMillis(sdf.parse("1/1/2023").getTime())
+    );
+    vectors = new MarkdownFile(
+        Path.of("src/test/resources/extendedNotes/vectors.md"),
+        "vectors.md",
+        FileTime.fromMillis(sdf.parse("2/2/2023").getTime()),
+        FileTime.fromMillis(sdf.parse("2/1/2023").getTime())
+    );
+    regex = new MarkdownFile(
+        Path.of("src/test/resources/extendedNotes/Regex.md"),
+        "Regex.md",
+        FileTime.fromMillis(sdf.parse("4/2/2023").getTime()),
+        FileTime.fromMillis(sdf.parse("3/1/2023").getTime())
+    );
+    regexDup = new MarkdownFile(
+        Path.of("src/test/resources/extendedNotes/RegexDup.md"),
+        "RegexDup.md",
+        FileTime.fromMillis(sdf.parse("4/2/2023").getTime()),
+        FileTime.fromMillis(sdf.parse("3/1/2023").getTime())
+    );
+    formatting = new MarkdownFile(
+        Path.of("src/test/resources/extendedNotes/formatting.md"),
+        "formatting.md",
+        FileTime.fromMillis(sdf.parse("5/2/2023").getTime()),
+        FileTime.fromMillis(sdf.parse("3/1/2023").getTime())
+    );
+    files.add(arrays);
+    files.add(vectors);
+    files.add(regex);
+    files.add(regexDup);
+    files.add(formatting);
+  }
+
+  /**
+   * Tests if SortByModified sorts files correctly.
+   */
+  @Test
+  public void testComparator() {
+    files.sort(new SortByModified());
+    assertEquals(List.of(vectors, arrays, regex, regexDup, formatting), files);
+  }
+}
