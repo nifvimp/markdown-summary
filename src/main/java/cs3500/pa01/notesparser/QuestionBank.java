@@ -2,6 +2,7 @@ package cs3500.pa01.notesparser;
 
 import cs3500.pa01.interpreter.ProblemExtractor;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionBank extends OutputFile {
@@ -22,7 +23,12 @@ public class QuestionBank extends OutputFile {
    */
   @Override
   public List<String> compile() {
-    // TODO: implement
-    return null;
+    List<String> questionBank = new ArrayList<>();
+    List<MarkdownFile> markdownFiles = getMarkdownFiles();
+    for (MarkdownFile file : markdownFiles) {
+      List<String> problems = strip(file.path());
+      questionBank.addAll(problems);
+    }
+    return questionBank;
   }
 }
