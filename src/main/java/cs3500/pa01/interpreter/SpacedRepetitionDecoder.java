@@ -21,9 +21,19 @@ public class SpacedRepetitionDecoder implements Interpreter<String, Problem> {
 
   private Problem interpret(String line) {
     String[] params = line.split(DELIMITER);
-    String question = params[0];
-    String answer = params[1];
-    Difficulty difficulty = Difficulty.valueOf(params[2]);
+    String question;
+    String answer;
+    Difficulty difficulty;
+    try {
+      question = params[0];
+      answer = params[1];
+      difficulty = Difficulty.valueOf(params[2]);
+    } catch (IndexOutOfBoundsException e) {
+      throw new IllegalArgumentException(
+          String.format(
+              "the problem '%s' in the inputted '.sr' file was not properly formatted.", line), e
+      );
+    }
     return new Problem(question, answer, difficulty);
   }
 }
