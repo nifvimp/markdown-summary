@@ -61,4 +61,9 @@ public class Summary extends OutputFile {
       );
     }
   }
+
+  @Override
+  protected String fileExtension() {
+    return ".md";
+  }
 }

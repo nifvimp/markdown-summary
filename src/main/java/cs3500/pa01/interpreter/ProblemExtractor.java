@@ -1,5 +1,6 @@
 package cs3500.pa01.interpreter;
 
+import cs3500.pa01.studysession.Difficulty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import java.util.List;
  * Extracts all the question-answer blocks / problem from a markdown file.
  */
 public class ProblemExtractor extends MarkdownStripper {
+  // TODO: change delimiter
+  private static final String DELIMITER = "\\-(:?|!:)-/";
   /**
    * Extracts all the question-answer blocks from the given markdown file content.
    *
@@ -16,13 +19,14 @@ public class ProblemExtractor extends MarkdownStripper {
   @Override
   public List<String> interpret(List<String> fileContent) {
     fileContent = super.interpret(fileContent);
-    List<String> summary = new ArrayList<>();
+    List<String> questionBank = new ArrayList<>();
     for (String line : fileContent) {
       if (isProblem(line)) {
-        summary.add(line);
+        String problem = toProblem(line);
+        questionBank.add(problem);
       }
     }
-    return summary;
+    return questionBank;
   }
 
   /**
@@ -33,5 +37,17 @@ public class ProblemExtractor extends MarkdownStripper {
    */
   private boolean isProblem(String line) {
     return !isHeader(line) && line.contains(":::");
+  }
+
+  /**
+   * Formats the question-answer block to be written to a spaced repetition file and sets the
+   * default difficulty of the problem to hard.
+   *
+   * @param line line to convert
+   * @return properly formatted problem
+   */
+  private String toProblem(String line) {
+    // TODO: (optional) deal with white space
+    return String.join(DELIMITER, line.split(":::")) + DELIMITER + Difficulty.HARD;
   }
 }

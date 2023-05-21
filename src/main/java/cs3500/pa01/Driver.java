@@ -50,7 +50,7 @@ public class Driver {
       case 3 -> {
         validate(args);
         OrderingFlag order = OrderingFlag.valueOf(args[1].toUpperCase());
-        Path output = tryCastOutput(Path.of(args[2])); // TODO: try to strip extension
+        Path output = Path.of(args[2]);
         Path root = Path.of(args[0]);
         controller = new NotesController(root, order, output);
       }
@@ -104,6 +104,11 @@ public class Driver {
           String.format("'%s' (1st argument) is not a directory.", root)
       );
     }
+    if (hasExtension(output)) {
+      throw new IllegalArgumentException(
+          String.format("'%s' (3nd argument) should not have a file extension.", output)
+      );
+    }
     // no check if output path is file since program will create a file even if a directory
     // with the same name exists already.
     if (Files.exists(output) && !Files.isWritable(output)) {
@@ -113,17 +118,23 @@ public class Driver {
     }
   }
 
-  private static Path tryCastOutput(Path output) {
-    String filename = output.getFileName().toString();
+  private static boolean hasExtension(Path path) {
+    String filename = path.getFileName().toString();
     int extensionStart = filename.lastIndexOf('.');
-    if (extensionStart < 0) {
-      output = Path.of(output + ".md");
-    }
-    if (!output.toString().endsWith(".md")) {
-      throw new IllegalArgumentException(
-          String.format("'%s' (2nd argument) should be a markdown file.", output)
-      );
-    }
-    return output;
+    return extensionStart > 0;
   }
+
+//  private static Path tryCastOutput(Path output) {
+//    String filename = output.getFileName().toString();
+//    int extensionStart = filename.lastIndexOf('.');
+//    if (extensionStart < 0) {
+//      output = Path.of(output + ".md");
+//    }
+//    if (!output.toString().endsWith(".md")) {
+//      throw new IllegalArgumentException(
+//          String.format("'%s' (2nd argument) should be a markdown file.", output)
+//      );
+//    }
+//    return output;
+//  }
 }

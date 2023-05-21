@@ -63,6 +63,7 @@ public class MarkdownStripper implements Interpreter<String, String> {
    *      the text falls under
    */
   private static List<String> splitByHeaders(List<String> fileContent, List<String> headers) {
+    // TODO: fix problem where file with no headers is not read correctly
     // TODO: clean up
     if (headers.size() < 1) {
       return List.of(
@@ -101,7 +102,7 @@ public class MarkdownStripper implements Interpreter<String, String> {
     int postfix = contents.indexOf("]]");
     while (prefix >= 0 && postfix >= 0) {
       try {
-        phrases.add("- " + contents.substring(prefix + 2, postfix));
+        phrases.add(contents.substring(prefix + 2, postfix));
       } catch (IndexOutOfBoundsException ignored) {
         // An empty catch block
       }

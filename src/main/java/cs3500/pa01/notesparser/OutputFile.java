@@ -79,6 +79,7 @@ public abstract class OutputFile {
    */
   public void write(Path output) {
     // TODO: move to controller
+    output = Path.of(output + fileExtension());
     Writer writer;
     try {
       writer = WRITER_TYPE.getConstructor(new Class[] {Path.class}).newInstance(output);
@@ -87,4 +88,11 @@ public abstract class OutputFile {
     }
     writer.write(compile());
   }
+
+  /**
+   * Gets the file extension of an output file.
+   *
+   * @return the file extension of this output file
+   */
+  protected abstract String fileExtension();
 }

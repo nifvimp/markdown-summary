@@ -24,7 +24,7 @@ class SummaryTest {
       throw new RuntimeException();
     }
     assertThrows(RuntimeException.class,
-        () -> s.write(notWritable.toPath())
+        () -> s.write(Path.of("src/test/resources/NotWritableFile"))
     );
     if (!notWritable.setWritable(true)) {
       throw new RuntimeException();

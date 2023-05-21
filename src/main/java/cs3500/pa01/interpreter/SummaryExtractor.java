@@ -18,8 +18,10 @@ public class SummaryExtractor extends MarkdownStripper {
     fileContent = super.interpret(fileContent);
     List<String> summary = new ArrayList<>();
     for (String line : fileContent) {
-      if (isHeader(line) || isImportantPhrase(line) || isSpacing(line)) {
+      if (isHeader(line) || isSpacing(line)) {
         summary.add(line);
+      } else if (isImportantPhrase(line)) {
+        summary.add("- " + line);
       }
     }
     return summary;
