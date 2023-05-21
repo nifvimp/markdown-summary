@@ -1,5 +1,8 @@
 package cs3500.pa01.studysession;
 
+import cs3500.pa01.interpreter.SpacedRepetitionEncoder;
+import cs3500.pa01.writer.BasicWriter;
+import cs3500.pa01.writer.Writer;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +38,8 @@ public class StudySessionImpl implements StudySession {
 
   @Override
   public void write() {
-    // TODO: replace with writer
+    Writer writer = new BasicWriter(questionBank);
+    List<String> encoded = new SpacedRepetitionEncoder().interpret(problems);
+    writer.write(encoded);
   }
 }

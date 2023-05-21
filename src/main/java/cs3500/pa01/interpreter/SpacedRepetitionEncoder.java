@@ -6,7 +6,7 @@ import java.util.List;
 
 public class SpacedRepetitionEncoder implements Interpreter<Problem, String> {
   // TODO: change delimiter
-  private static final String DELIMITER = "\\-(:?|!:)-/";
+  private static final String DELIMITER = ":::";
 
   @Override
   public List<String> interpret(List<Problem> problems) {

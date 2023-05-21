@@ -1,7 +1,6 @@
 package cs3500.pa01.studysession;
 
 public class SessionInfo {
-  // TODO: Implement methods and functionality to update info as model updates
   private final int problemTotal;
   private int answeredCount;
   private int hardCount;

@@ -14,10 +14,6 @@ import java.util.List;
  */
 public abstract class OutputFile {
   /**
-   * Writer output file writes with.
-   */
-  private static final Class<? extends Writer> WRITER_TYPE = BasicWriter.class;
-  /**
    * Markdown to output file interpreter.
    */
   private final MarkdownStripper extractor;
@@ -72,14 +68,8 @@ public abstract class OutputFile {
    * @param output path to file to be written to
    */
   public void write(Path output) {
-    // TODO: move to controller
     output = Path.of(output + fileExtension());
-    Writer writer;
-    try {
-      writer = WRITER_TYPE.getConstructor(new Class[] {Path.class}).newInstance(output);
-    } catch (Exception e) {
-      throw new RuntimeException("Error creating instance of Writer used by 'OutputFile.java'", e);
-    }
+    Writer writer = new BasicWriter(output);
     writer.write(compile());
   }
 

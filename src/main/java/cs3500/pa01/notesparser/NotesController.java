@@ -19,6 +19,7 @@ public class NotesController implements Controller {
    */
   @Override
   public void run() {
+    // TODO: make writer and add functionality to add extensions
     Summary studyGuide = new Summary(root, order);
     QuestionBank questionBank = new QuestionBank(root);
     studyGuide.write(output);

@@ -8,7 +8,7 @@ import java.util.List;
 public class SpacedRepetitionDecoder implements Interpreter<String, Problem> {
 
   // TODO: change delimiter
-  private static final String DELIMITER = "\\\\-\\(:\\?\\|!:\\)-/";
+  private static final String DELIMITER = ":::";
   @Override
   public List<Problem> interpret(List<String> fileContent) {
     List<Problem> problems = new ArrayList<>();

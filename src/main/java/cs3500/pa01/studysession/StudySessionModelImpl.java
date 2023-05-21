@@ -10,7 +10,6 @@ public class StudySessionModelImpl implements StudySessionModel {
   private final SessionInfo info;
 
   public StudySessionModelImpl(Path questionBank, int totalQuestions) {
-    // TODO: use study session to get problems with totalQuestions
     this.session = new StudySessionImpl(questionBank);
     this.problems = session.getProblems(totalQuestions);
     this.info = session.getInfo();
@@ -29,13 +28,10 @@ public class StudySessionModelImpl implements StudySessionModel {
 
   @Override
   public void update(Difficulty difficulty) {
-    currProblemIndex++;
     Problem currentProblem = currentProblem();
     switch(currentProblem.difficulty()) {
-      // TODO: do polymorphism bullshit
-      // pass in info into problem instead of calling stuff here.
       case HARD -> {
-        if ((currentProblem.updateDifficulty(difficulty))) {
+        if (currentProblem.updateDifficulty(difficulty)) {
           info.easyChanged();
         } else {
           info.hardChanged();
@@ -49,6 +45,7 @@ public class StudySessionModelImpl implements StudySessionModel {
         }
       }
     }
+    currProblemIndex++;
   }
 
   @Override

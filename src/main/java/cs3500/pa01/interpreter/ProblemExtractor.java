@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ProblemExtractor extends MarkdownStripper {
   // TODO: change delimiter
-  private static final String DELIMITER = "\\-(:?|!:)-/";
+  private static final String DELIMITER = ":::";
   /**
    * Extracts all the question-answer blocks from the given markdown file content.
    *
