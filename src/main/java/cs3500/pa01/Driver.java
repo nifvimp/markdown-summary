@@ -44,7 +44,7 @@ public class Driver {
     switch (args.length) {
       case 0 -> {
         Readable input = new InputStreamReader(System.in);
-        StudySessionView view = new StudySessionTerminalView();
+        StudySessionView view = new StudySessionTerminalView(System.out);
         controller = new StudySessionController(input, view);
       }
       case 3 -> {

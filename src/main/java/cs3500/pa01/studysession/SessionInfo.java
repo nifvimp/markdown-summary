@@ -19,8 +19,32 @@ public class SessionInfo {
     this.easyChanged = easyChanged;
   }
 
-  public SessionInfo(int problemTotal, int hardCount, int easyCount) {
-    this(problemTotal, 0, hardCount, easyCount, 0, 0);
+  public SessionInfo(int hardCount, int easyCount) {
+    this(hardCount + easyCount, 0, hardCount, easyCount, 0, 0);
+  }
+
+  public int getProblemTotal() {
+    return problemTotal;
+  }
+
+  public int getAnsweredCount() {
+    return answeredCount;
+  }
+
+  public int getHardCount() {
+    return hardCount;
+  }
+
+  public int getEasyCount() {
+    return easyCount;
+  }
+
+  public int getHardChanged() {
+    return hardChanged;
+  }
+
+  public int getEasyChanged() {
+    return easyChanged;
   }
 
   public void easyChanged() {

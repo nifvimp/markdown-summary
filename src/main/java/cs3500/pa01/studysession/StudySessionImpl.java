@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class StudySessionImpl implements StudySession {
+  private final Path questionBank;
   private final List<Problem> problems = new ArrayList<>();
   private final SessionInfo info;
 
   public StudySessionImpl(Path file) {
+    this.questionBank = file;
     SpacedRepetitionReader reader = new SpacedRepetitionReader(file);
     List<Problem> hard = reader.getHardQuestions();
     List<Problem> easy = reader.getEasyQuestions();
@@ -19,8 +21,7 @@ public class StudySessionImpl implements StudySession {
     problems.addAll(easy);
     int hardCount = hard.size();
     int easyCount = easy.size();
-    int totalCount = hardCount + easyCount;
-    info = new SessionInfo(totalCount, hardCount, easyCount);
+    info = new SessionInfo(hardCount, easyCount);
   }
   @Override
   public List<Problem> getProblems(int totalQuestions) {
@@ -33,7 +34,7 @@ public class StudySessionImpl implements StudySession {
   }
 
   @Override
-  public void write(Path output) {
+  public void write() {
     // TODO: replace with writer
   }
 }
