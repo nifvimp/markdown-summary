@@ -1,8 +1,10 @@
 package cs3500.pa01.studysession;
 
 public interface StudySessionModel {
-  Problem next();
+  // TODO: optimize way to tell when session is out of questions
+  Problem currentProblem();
   SessionInfo getInfo();
-  boolean update(Difficulty difficulty);
+  // TODO: needs to update current problem index as well
+  void update(Difficulty difficulty);
   void exit();
 }
