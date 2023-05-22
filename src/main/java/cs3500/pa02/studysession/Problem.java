@@ -1,5 +1,7 @@
 package cs3500.pa02.studysession;
 
+import java.util.Objects;
+
 public class Problem {
   private final String question;
   private final String answer;
@@ -28,5 +30,22 @@ public class Problem {
     }
     this.difficulty = difficulty;
     return true;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Problem problem)) {
+      return false;
+    }
+    return Objects.equals(question, problem.question) &&
+        Objects.equals(answer, problem.answer) && difficulty == problem.difficulty;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(question, answer, difficulty);
   }
 }

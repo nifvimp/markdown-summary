@@ -32,32 +32,3 @@ public class BasicWriter implements Writer {
     write(String.join("\n", values));
   }
 }
-
-//class BasicWriter2 implements Writer {
-//  private final Appendable appendable;
-//
-//  /**
-//   * Makes a new Writer.
-//   *
-//   * @param appendable where to write to
-//   */
-//  public BasicWriter2(Appendable appendable) {
-//    this.appendable = Objects.requireNonNull(appendable);
-//  }
-//
-//  @Override
-//  public void write(String phrase) {
-//    try {
-//      appendable.append(phrase);
-//    } catch (IOException e) {
-//      throw new RuntimeException(e.getMessage());
-//    }
-//  }
-//
-//  @Override
-//  public void write(List<String> phrases) {
-//    for (String phrase : phrases) {
-//      write(phrase);
-//    }
-//  }
-//}

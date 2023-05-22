@@ -2,6 +2,8 @@ package cs3500.pa02.studysession;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class StudySessionModelImpl implements StudySessionModel {
   private final StudySession session;
@@ -9,11 +11,15 @@ public class StudySessionModelImpl implements StudySessionModel {
   private int currProblemIndex;
   private final SessionInfo info;
 
-  public StudySessionModelImpl(Path questionBank, int totalQuestions) {
-    this.session = new StudySessionImpl(questionBank);
-    this.problems = session.getProblems(totalQuestions);
-    this.info = session.getInfo();
+  public StudySessionModelImpl(Path questionBank, int totalQuestions, Random random) {
+    this.session = new StudySessionImpl(questionBank, random);
+    this.problems = this.session.getProblems(totalQuestions);
+    this.info = this.session.getInfo();
     this.currProblemIndex = 0;
+  }
+
+  public StudySessionModelImpl(Path questionBank, int totalQuestions) {
+    this(questionBank, totalQuestions, new Random());
   }
 
   @Override
@@ -29,22 +35,19 @@ public class StudySessionModelImpl implements StudySessionModel {
   @Override
   public void update(Difficulty difficulty) {
     Problem currentProblem = currentProblem();
-    switch(currentProblem.difficulty()) {
-      case HARD -> {
-        if (currentProblem.updateDifficulty(difficulty)) {
-          info.easyChanged();
-        } else {
-          info.hardChanged();
-        }
-      }
-      case EASY -> {
-        if ((currentProblem.updateDifficulty(difficulty))) {
-          info.hardChanged();
-        } else {
-          info.easyChanged();
-        }
-      }
+    if (currentProblem == null) {
+      throw new NoSuchElementException("There are no more problems left for this session.");
     }
+    Difficulty currDifficulty = currentProblem.difficulty();
+    if (currentProblem.updateDifficulty(difficulty)) {
+      switch (currDifficulty) {
+        case HARD -> info.hardChanged();
+        case EASY -> info.easyChanged();
+      }
+    } else {
+      info.problemAnswered();
+    }
+    session.write(); // TODO: do I overwrite every update?
     currProblemIndex++;
   }
 

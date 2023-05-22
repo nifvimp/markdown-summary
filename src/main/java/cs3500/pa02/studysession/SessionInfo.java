@@ -27,8 +27,7 @@ public class SessionInfo {
           Questions Changed from Easy to Hard: %s
           Questions Changed from Hard to Easy: %s
           Updated Total Hard Questions: %s
-          Updated Total Easy Questions: %s
-        """,
+          Updated Total Easy Questions: %s""",
         this.answeredCount,
         this.easyChanged,
         this.hardChanged,
@@ -37,16 +36,20 @@ public class SessionInfo {
   }
 
   public void easyChanged() {
-    answeredCount++;
+    problemAnswered();
     hardCount++;
     easyCount--;
     easyChanged++;
   }
 
   public void hardChanged() {
-    answeredCount++;
+    problemAnswered();
     hardCount--;
     easyCount++;
     hardChanged++;
+  }
+
+  public void problemAnswered() {
+    answeredCount++;
   }
 }

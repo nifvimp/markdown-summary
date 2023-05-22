@@ -17,6 +17,9 @@ public class SpacedRepetitionEncoder implements Interpreter<Problem, String> {
   }
 
   private String interpret(Problem problem) {
-    return problem.question() + DELIMITER + problem.answer() + DELIMITER + problem.difficulty();
+    return String.format("%s%s%s%s%s",
+        problem.question(), DELIMITER,
+        problem.answer(), DELIMITER,
+        problem.difficulty());
   }
 }

@@ -16,7 +16,9 @@ public class SpacedRepetitionReader {
     try {
       problems = decoder.interpret(Files.readAllLines(file));
     } catch (IOException e) {
-      throw new IllegalArgumentException("path doesn't exist.", e); // TODO: change error message
+      throw new IllegalArgumentException(
+          String.format("Error reading file '%s'", file), e
+      );
     }
     for (Problem problem : problems) {
       switch(problem.difficulty()) {

@@ -11,17 +11,16 @@ public class StudySessionTerminalView implements StudySessionView {
 
   @Override
   public void greetUser() {
-    promptUser("Welcome to Spaced Repetition Study Session!");
+    promptUser("Welcome to the Spaced Repetition Study Session!");
   }
 
   @Override
   public void showOptions() {
     promptUser("""
         Select option:
-          1. Mark question as easy
+          1. See answer
           2. Mark question as hard
-          3. See answer
-        """
+          3. Mark question as easy"""
     );
   }
 
