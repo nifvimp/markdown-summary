@@ -1,6 +1,8 @@
 package cs3500.pa02.notesparser;
 
 import cs3500.pa02.Controller;
+import cs3500.pa02.writer.BasicWriter;
+import cs3500.pa02.writer.Writer;
 import java.nio.file.Path;
 
 public class NotesController implements Controller {
@@ -19,10 +21,11 @@ public class NotesController implements Controller {
    */
   @Override
   public void run() {
-    // TODO: make writer and add functionality to add extensions
     Summary studyGuide = new Summary(root, order);
     QuestionBank questionBank = new QuestionBank(root);
-    studyGuide.write(output);
-    questionBank.write(output);
+    Writer studyGuideWriter = new BasicWriter(Path.of(output + studyGuide.fileExtension()));
+    Writer questionBankWriter = new BasicWriter(Path.of(output + questionBank.fileExtension()));
+    studyGuideWriter.write(studyGuide.compile());
+    questionBankWriter.write(questionBank.compile());
   }
 }

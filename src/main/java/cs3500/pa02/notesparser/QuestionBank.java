@@ -34,9 +34,7 @@ public class QuestionBank extends OutputFile {
   }
 
   @Override
-  protected String fileExtension() {
+  public String fileExtension() {
     return ".sr";
   }
-
-
 }

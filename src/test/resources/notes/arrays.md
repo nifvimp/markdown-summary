@@ -13,8 +13,12 @@ actually been created yet]].
 ## Creating an Array (Instantiation)
 - [[General form:  arrayName = new type[numberOfElements];]]
 - ex: myData = new int[100];
+- [[What is the syntax to initialize an array:::Type[numberOfElements];]]
 
 - Data types of the reference and array need to match.
 - [[numberOfElements must be a positive Integer.]]
 - [[Gotcha: Array size is not
 modifiable once instantiated.]]
+- [[Are arrays modifiable?
+::: Yes,
+but only the elements, not the size of the array]]

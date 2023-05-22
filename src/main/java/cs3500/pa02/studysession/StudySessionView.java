@@ -31,7 +31,7 @@ public interface StudySessionView {
    *
    * @param info the session's stats
    */
-  void showInfo(SessionInfo info);
+  void showInfo(String info);
 
   /**
    * Prompts the user with the given message.

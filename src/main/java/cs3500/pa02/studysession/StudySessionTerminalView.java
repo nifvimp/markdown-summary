@@ -36,29 +36,14 @@ public class StudySessionTerminalView implements StudySessionView {
   }
 
   @Override
-  public void showInfo(SessionInfo info) {
-    promptUser(String.format("""
-        Session Complete!
-        
-        Session Information:
-          Questions Answered: %s
-          Questions Changed from Easy to Hard: %s
-          Questions Changed from Hard to Easy: %s
-          Updated Total Hard Questions: %s
-          Updated Total Easy Questions: %s
-        """,
-        info.getAnsweredCount(),
-        info.getEasyChanged(),
-        info.getHardChanged(),
-        info.getHardCount(),
-        info.getEasyCount())
-    );
+  public void showInfo(String info) {
+    promptUser("Session Complete!\n\n" + info);
   }
 
   @Override
   public void promptUser(String msg) {
     try {
-      output.append(msg + "\n");
+      output.append(msg).append("\n");
     } catch (IOException e) {
       throw new RuntimeException(String.format("Error outputting to '%s'", output), e);
     }

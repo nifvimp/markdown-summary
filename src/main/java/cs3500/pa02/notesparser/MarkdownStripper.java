@@ -12,6 +12,7 @@ import java.util.Scanner;
  * Strips the contents of a markdown file down to just its notable parts.
  */
 public class MarkdownStripper implements Extractor<List<String>> {
+  // TODO: fix issue where stripper can't parse files with no headers
   /**
    * Strips the contents of a markdown file that was given down to just its notable parts.
    *

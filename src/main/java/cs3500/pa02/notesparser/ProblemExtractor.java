@@ -9,8 +9,8 @@ import java.util.List;
  * Extracts all the question-answer blocks / problem from a markdown file.
  */
 public class ProblemExtractor extends MarkdownStripper {
-  // TODO: change delimiter
   private static final String DELIMITER = ":::";
+
   /**
    * Extracts all the question-answer blocks from the given markdown file content.
    *
@@ -48,7 +48,11 @@ public class ProblemExtractor extends MarkdownStripper {
    * @return properly formatted problem
    */
   private String toProblem(String line) {
-    // TODO: (optional) deal with white space
-    return String.join(DELIMITER, line.split(":::")) + DELIMITER + Difficulty.HARD;
+    // Does not handle case where there are multiple :::
+    String[] params = line.split(":::");
+    for (int i = 0; i < params.length; i++) {
+      params[i] = params[i].trim();
+    }
+    return String.join(DELIMITER, params) + DELIMITER + Difficulty.HARD;
   }
 }

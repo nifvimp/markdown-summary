@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MarkdownFileTest {
+public class MarkdownFileTest {
   private MarkdownFile arrays;
   private MarkdownFile vectors;
   @BeforeEach
@@ -31,25 +31,25 @@ class MarkdownFileTest {
   }
 
   @Test
-  public void path() {
+  public void testPath() {
     assertEquals(Path.of("src/test/resources/notes/arrays.md"), arrays.path());
     assertEquals(Path.of("src/test/resources/notes/vectors.md"), vectors.path());
   }
 
   @Test
-  public void filename() {
+  public void testFilename() {
     assertEquals("arrays.md", arrays.filename());
     assertEquals("vectors.md", vectors.filename());
   }
 
   @Test
-  public void lastModified() {
+  public void testLastModified() {
     assertEquals("2023-02-03T05:00:00Z", arrays.lastModified().toString());
     assertEquals("2023-02-02T05:00:00Z", vectors.lastModified().toString());
   }
 
   @Test
-  public void creationTime() {
+  public void testCreationTime() {
     assertEquals("2023-01-01T05:00:00Z", arrays.creationTime().toString());
     assertEquals("2023-01-02T05:00:00Z", vectors.creationTime().toString());
   }

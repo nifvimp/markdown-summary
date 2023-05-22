@@ -26,8 +26,11 @@ public class StudySessionController implements Controller {
   public void run() {
     view.greetUser();
     getSession();
-    while (model.currentProblem() != null) {
-      chooseOption(model.currentProblem());
+    Problem currProblem = model.currentProblem();
+    while (currProblem != null) {
+      view.showQuestion(currProblem);
+      chooseOption(currProblem);
+      currProblem = model.currentProblem();
     }
     view.showInfo(model.getInfo());
     model.exit();

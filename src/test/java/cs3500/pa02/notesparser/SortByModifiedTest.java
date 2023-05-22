@@ -33,31 +33,31 @@ public class SortByModifiedTest {
     files = new ArrayList<>();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     arrays = new MarkdownFile(
-        Path.of("src/test/resources/extendedNotes/arrays.md"),
+        Path.of("src/test/resources/pa01Test/arrays.md"),
         "arrays.md",
         FileTime.fromMillis(sdf.parse("3/2/2023").getTime()),
         FileTime.fromMillis(sdf.parse("1/1/2023").getTime())
     );
     vectors = new MarkdownFile(
-        Path.of("src/test/resources/extendedNotes/vectors.md"),
+        Path.of("src/test/resources/pa01Test/vectors.md"),
         "vectors.md",
         FileTime.fromMillis(sdf.parse("2/2/2023").getTime()),
         FileTime.fromMillis(sdf.parse("2/1/2023").getTime())
     );
     regex = new MarkdownFile(
-        Path.of("src/test/resources/extendedNotes/Regex.md"),
+        Path.of("src/test/resources/pa01Test/Regex.md"),
         "Regex.md",
         FileTime.fromMillis(sdf.parse("4/2/2023").getTime()),
         FileTime.fromMillis(sdf.parse("3/1/2023").getTime())
     );
     regexDup = new MarkdownFile(
-        Path.of("src/test/resources/extendedNotes/RegexDup.md"),
+        Path.of("src/test/resources/pa01Test/RegexDup.md"),
         "RegexDup.md",
         FileTime.fromMillis(sdf.parse("4/2/2023").getTime()),
         FileTime.fromMillis(sdf.parse("3/1/2023").getTime())
     );
     formatting = new MarkdownFile(
-        Path.of("src/test/resources/extendedNotes/formatting.md"),
+        Path.of("src/test/resources/pa01Test/formatting.md"),
         "formatting.md",
         FileTime.fromMillis(sdf.parse("5/2/2023").getTime()),
         FileTime.fromMillis(sdf.parse("3/1/2023").getTime())

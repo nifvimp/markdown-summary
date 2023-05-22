@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the MarkdownFileVisitor's error handling and functionality.
  */
-class MarkdownFileVisitorTest {
+public class MarkdownFileVisitorTest {
   MarkdownFileVisitor mfv;
 
   /**
@@ -40,12 +40,12 @@ class MarkdownFileVisitorTest {
         () -> mfv.getFoundMarkdownFiles()
     );
     // walk files
-    Files.walkFileTree(Path.of("src/test/resources/extendedNotes"), mfv);
+    Files.walkFileTree(Path.of("src/test/resources/pa01Test"), mfv);
     assertEquals(Set.of(
-        MarkdownFile.of(Path.of("src/test/resources/extendedNotes/new/formatting.md")),
-        MarkdownFile.of(Path.of("src/test/resources/extendedNotes/new/Regex.md")),
-        MarkdownFile.of(Path.of("src/test/resources/extendedNotes/arrays.md")),
-        MarkdownFile.of(Path.of("src/test/resources/extendedNotes/vectors.md"))
+        MarkdownFile.of(Path.of("src/test/resources/pa01Test/new/formatting.md")),
+        MarkdownFile.of(Path.of("src/test/resources/pa01Test/new/Regex.md")),
+        MarkdownFile.of(Path.of("src/test/resources/pa01Test/arrays.md")),
+        MarkdownFile.of(Path.of("src/test/resources/pa01Test/vectors.md"))
     ), new HashSet<>(mfv.getFoundMarkdownFiles()));
   }
 
@@ -60,19 +60,19 @@ class MarkdownFileVisitorTest {
     // not regular file since file doesn't exist
     assertEquals(FileVisitResult.CONTINUE, mfv.visitFile(Path.of(""), null));
     // visit file with no header
-    Path fileWithNoExtension = Path.of("src/test/resources/extendedNotes/FakeNews");
+    Path fileWithNoExtension = Path.of("src/test/resources/pa01Test/FakeNews");
     assertEquals(FileVisitResult.CONTINUE,
         mfv.visitFile(fileWithNoExtension,
             Files.readAttributes(fileWithNoExtension,
                 BasicFileAttributes.class))
     );
     assertEquals(0, mfv.getFoundMarkdownFiles().size());
-    Path pdf = Path.of("src/test/resources/extendedNotes/FakeUML.pdf");
+    Path pdf = Path.of("src/test/resources/pa01Test/FakeUML.pdf");
     assertEquals(FileVisitResult.CONTINUE,
         mfv.visitFile(pdf, Files.readAttributes(pdf, BasicFileAttributes.class))
     );
     assertEquals(0, mfv.getFoundMarkdownFiles().size());
-    Path md = Path.of("src/test/resources/extendedNotes/arrays.md");
+    Path md = Path.of("src/test/resources/pa01Test/arrays.md");
     assertEquals(FileVisitResult.CONTINUE,
         mfv.visitFile(md, Files.readAttributes(md, BasicFileAttributes.class))
     );
@@ -86,7 +86,7 @@ class MarkdownFileVisitorTest {
    */
   @Test
   public void testPreVisitDirectory() throws IOException {
-    Path dir = Path.of("src/test/resources");
+    Path dir = Path.of("src/test/resources/pa01Test");
     assertEquals(FileVisitResult.CONTINUE,
         mfv.preVisitDirectory(dir, Files.readAttributes(dir, BasicFileAttributes.class))
     );
@@ -97,8 +97,8 @@ class MarkdownFileVisitorTest {
    */
   @Test
   public void testVisitFileFailed() {
-    assertEquals(FileVisitResult.CONTINUE,
-        mfv.visitFileFailed(Path.of("src/test/resources/FakeNews"), new IOException())
+    assertEquals(FileVisitResult.CONTINUE, mfv.visitFileFailed(
+        Path.of("src/test/resources/pa01Test/FakeNews"), new IOException())
     );
   }
 

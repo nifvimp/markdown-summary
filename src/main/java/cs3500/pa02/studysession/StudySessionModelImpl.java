@@ -22,8 +22,8 @@ public class StudySessionModelImpl implements StudySessionModel {
   }
 
   @Override
-  public SessionInfo getInfo() {
-    return null;
+  public String getInfo() {
+    return info.getInfo();
   }
 
   @Override

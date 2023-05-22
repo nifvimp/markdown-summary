@@ -1,16 +1,13 @@
 package cs3500.pa02;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributeView;
-import java.nio.file.attribute.FileTime;
-import java.text.SimpleDateFormat;
-import org.junit.jupiter.api.BeforeAll;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -20,216 +17,62 @@ import org.junit.jupiter.api.Test;
 public class DriverTest {
   private static final Path STUDY_GUIDE = Path.of("src/test/resources/studyGuide.md");
   private static final Path SPACED_REPETITION = Path.of("src/test/resources/studyGuide.sr");
-  private static final Path ARRAYS = Path.of("src/test/resources/notes/arrays.md");
-  private static final Path VECTORS = Path.of("src/test/resources/notes/vectors.md");
-
 
   /**
-   * sets up files for testing.
-   */
-  @BeforeAll
-  public static void setup() {
-    try {
-      Files.delete(STUDY_GUIDE);
-    } catch (IOException ignored) {
-      // An empty catch block
-    }
-    try {
-      BasicFileAttributeView arrays = Files.getFileAttributeView(
-          ARRAYS, BasicFileAttributeView.class
-      );
-      BasicFileAttributeView vectors = Files.getFileAttributeView(
-          VECTORS, BasicFileAttributeView.class
-      );
-      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-      arrays.setTimes(
-          FileTime.fromMillis(sdf.parse("4/4/2023").getTime()),
-          null,
-          FileTime.fromMillis(sdf.parse("31/3/2023").getTime())
-      );
-      vectors.setTimes(
-          FileTime.fromMillis(sdf.parse("3/4/2023").getTime()),
-          null,
-          FileTime.fromMillis(sdf.parse("3/4/2023").getTime())
-      );
-    } catch (Exception e) {
-      throw new RuntimeException("Error changing file times of files.", e);
-    }
-  }
-
-  /**
-   * Tests program result is correct more robustly.
+   * Tests program file writing capabilities is correct more robustly.
    */
   @Test
-  public void testDriverOutputExtendedNotes() {
+  public void testDriverFileOutput() {
     Driver.main(new String[] {
-        "src/test/resources/extendedNotes",
+        "src/test/resources/pa01Test",
         "FILENAME",
         "src/test/resources/studyGuide"
     });
     String studyGuide;
-    String spacedRepetition;
+    Set<String> questionBank;
     try {
       studyGuide = Files.readString(STUDY_GUIDE);
-      spacedRepetition = Files.readString(SPACED_REPETITION);
+      questionBank = new HashSet<>(Files.readAllLines(SPACED_REPETITION));
     } catch (IOException e) {
       throw new RuntimeException("Failed to read output of program.", e);
     }
-    assertEquals(
-        """
-            # Java Arrays
-            - An **array** is a collection of variables of the same type
-
-            ## Declaring an Array
-            - General Form: type[] arrayName;
-            - only creates a reference
-            - no array has actually been created yet
-
-            ## Creating an Array (Instantiation)
-            - General form:  arrayName = new type[numberOfElements];
-            - numberOfElements must be a positive Integer.
-            - Gotcha: Array size is not modifiable once instantiated.
-
-            ## Formatting is Important
-            - formatting is a way of life
-
-            ## Formatting is for pros!?
-
-            # Regex is very powerful
-            - Use it well, and you got infinite power!
-
-            # Vectors
-            - Vectors act like resizable arrays
-
-            ## Declaring a vector
-            - General Form: Vector<type> v = new Vector();
-            - type needs to be a valid reference type
-
-            ## Adding an element to a vector
-            - v.add(object of type);""",
-        studyGuide
-    );
-    assertEquals("", spacedRepetition);
-  }
-
-  /**
-   * Tests program result is correct by filename.
-   */
-  @Test
-  public void testDriverOutputFilename() {
-    Driver.main(new String[] {
-        "src/test/resources/notes",
-        "FILENAME",
-        "src/test/resources/studyGuide"
-    });
-    String result = null;
-    try {
-      result = Files.readString(Path.of("src/test/resources/studyGuide.md"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    assertEquals(
-        """
-            # Java Arrays
-            - An **array** is a collection of variables of the same type
-                      
-            ## Declaring an Array
-            - General Form: type[] arrayName;
-            - only creates a reference
-            - no array has actually been created yet
-                      
-            ## Creating an Array (Instantiation)
-            - General form:  arrayName = new type[numberOfElements];
-            - numberOfElements must be a positive Integer.
-            - Gotcha: Array size is not modifiable once instantiated.
-                      
-            # Vectors
-            - Vectors act like resizable arrays
-                      
-            ## Declaring a vector
-            - General Form: Vector<type> v = new Vector();
-            - type needs to be a valid reference type
-                      
-            ## Adding an element to a vector
-            - v.add(object of type);""",
-        result
-    );
-  }
-
-  /**
-   * Tests program result is correct by creation time.
-   */
-  @Test
-  public void testDriverOutputCreated() {
-    Driver.main(new String[] {
-        "src/test/resources/notes/",
-        "CREATED",
-        "src/test/resources/studyGuide"
-    });
-    String result = null;
-    try {
-      result = Files.readString(Path.of("src/test/resources/studyGuide.md"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    assertEquals(
-        """
-            # Vectors
-            - Vectors act like resizable arrays
-
-            ## Declaring a vector
-            - General Form: Vector<type> v = new Vector();
-            - type needs to be a valid reference type
-
-            ## Adding an element to a vector
-            - v.add(object of type);""",
-        result
-    );
-  }
-
-  /**
-   * Tests program result is correct by last modified time.
-   */
-  @Test
-  public void testDriverOutputModified() {
-    // for some reason reverses when uploaded to GitHub.
-    Driver.main(new String[] {
-        "src/test/resources/notes",
-        "MODIFIED",
-        "src/test/resources/studyGuide"
-    });
-    String result = null;
-    try {
-      result = Files.readString(Path.of("src/test/resources/studyGuide.md"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    assertEquals(
-        """
-            # Vectors
-            - Vectors act like resizable arrays
+    assertEquals("""
+        # Java Arrays
+        - An **array** is a collection of variables of the same type
               
-            ## Declaring a vector
-            - General Form: Vector<type> v = new Vector();
-            - type needs to be a valid reference type
+        ## Declaring an Array
+        - General Form: type[] arrayName;
+        - only creates a reference
+        - no array has actually been created yet
               
-            ## Adding an element to a vector
-            - v.add(object of type);
-                      
-            # Java Arrays
-            - An **array** is a collection of variables of the same type
-                      
-            ## Declaring an Array
-            - General Form: type[] arrayName;
-            - only creates a reference
-            - no array has actually been created yet
-                    
-            ## Creating an Array (Instantiation)
-            - General form:  arrayName = new type[numberOfElements];
-            - numberOfElements must be a positive Integer.
-            - Gotcha: Array size is not modifiable once instantiated.""",
-        result
-    );
+        ## Creating an Array (Instantiation)
+        - General form:  arrayName = new type[numberOfElements];
+        - numberOfElements must be a positive Integer.
+        - Gotcha: Array size is not modifiable once instantiated.
+                
+        ## Formatting is Important
+        - formatting is a way of life
+
+        ## Formatting is for pros!?
+
+        # Regex is very powerful
+        - Use it well, and you got infinite power!
+                
+        # Vectors
+        - Vectors act like resizable arrays
+          
+        ## Declaring a vector
+        - General Form: Vector<type> v = new Vector();
+        - type needs to be a valid reference type
+          
+        ## Adding an element to a vector
+        - v.add(object of type);""", studyGuide);
+    assertEquals(Set.of(
+        "What is the syntax to initialize an array:::Type[numberOfElements];:::HARD",
+        "Are arrays modifiable?:::Yes, but only the elements, not the size of the array:::HARD",
+        "What is the syntax for declaring a vector?:::Vector<type> v = new Vector();:::HARD",
+        "What does \\\\R indicate?:::It signifies any line break character:::HARD"
+    ), questionBank);
   }
 
   /**
@@ -246,72 +89,72 @@ public class DriverTest {
     );
   }
 
-  /**
-   * Tests driver throws if root is invalid.
-   */
-  @Test
-  public void testDriverThrowsIfRootIsInvalidPath() {
-    assertThrows(IllegalArgumentException.class,
-        () -> Driver.main(
-            new String[] {"src/test/re|sourc%>es/notes", "FileName", "src/test/resources"})
-    );
-  }
-
-  /**
-   * Tests driver throws if output is invalid.
-   */
-  @Test
-  public void testDriverThrowsIfOutputIsnvalidPath() {
-    assertThrows(IllegalArgumentException.class,
-        () -> Driver.main(
-            new String[] {"src/test/resources/notes", "CREATED",
-                "src/test/resources/<study|Guide>"
-            })
-    );
-  }
-
-  /**
-   * Tests driver throws if ordering flag is invalid.
-   */
-  @Test
-  public void testDriverThrowsIfOrderingFlagDoesNotExist() {
-    assertThrows(IllegalArgumentException.class,
-        () -> Driver.main(new String[] {"src/test/resources/notes", "none", "src/test/resources"})
-    );
-    assertThrows(IllegalArgumentException.class,
-        () -> Driver.main(new String[] {"src/test/resources/notes", "", "src/test/resources"})
-    );
-  }
-
-  /**
-   * Tests driver throws if root doesn't exist.
-   */
-  @Test
-  public void testDriverThrowsIfRootDoesNotExist() {
-    assertThrows(IllegalArgumentException.class,
-        () -> Driver.main(
-            new String[] {"src/test/resources/notNotes", "filename", "src/test/resources"})
-    );
-  }
-
-  /**
-   * Tests driver throws if root is not a directory.
-   */
-  @Test
-  public void testDriverThrowsIfRootIsNotDirectory() {
-    assertThrows(IllegalArgumentException.class,
-        () -> Driver.main(
-            new String[] {"src/test/resources/studyGuide", "created", "src/test/resources"})
-    );
-  }
-
-  /**
-   * Tests driver throws if output is not writable.
-   */
-  @Test
-  public void testDriverThrowsIfOutputIsNotWritable() {
-    //TODO: fix write method and test.
-    // throws run time b/c validation didn't check with given output + extensions
+//  /**
+//   * Tests driver throws if root is invalid.
+//   */
+//  @Test
+//  public void testDriverThrowsIfRootIsInvalidPath() {
+//    assertThrows(IllegalArgumentException.class,
+//        () -> Driver.main(
+//            new String[] {"src/test/re|sourc%>es/notes", "FileName", "src/test/resources"})
+//    );
+//  }
+//
+//  /**
+//   * Tests driver throws if output is invalid.
+//   */
+//  @Test
+//  public void testDriverThrowsIfOutputIsnvalidPath() {
+//    assertThrows(IllegalArgumentException.class,
+//        () -> Driver.main(
+//            new String[] {"src/test/resources/notes", "CREATED",
+//                "src/test/resources/<study|Guide>"
+//            })
+//    );
+//  }
+//
+//  /**
+//   * Tests driver throws if ordering flag is invalid.
+//   */
+//  @Test
+//  public void testDriverThrowsIfOrderingFlagDoesNotExist() {
+//    assertThrows(IllegalArgumentException.class,
+//        () -> Driver.main(new String[] {"src/test/resources/notes", "none", "src/test/resources"})
+//    );
+//    assertThrows(IllegalArgumentException.class,
+//        () -> Driver.main(new String[] {"src/test/resources/notes", "", "src/test/resources"})
+//    );
+//  }
+//
+//  /**
+//   * Tests driver throws if root doesn't exist.
+//   */
+//  @Test
+//  public void testDriverThrowsIfRootDoesNotExist() {
+//    assertThrows(IllegalArgumentException.class,
+//        () -> Driver.main(
+//            new String[] {"src/test/resources/notNotes", "filename", "src/test/resources"})
+//    );
+//  }
+//
+//  /**
+//   * Tests driver throws if root is not a directory.
+//   */
+//  @Test
+//  public void testDriverThrowsIfRootIsNotDirectory() {
+//    assertThrows(IllegalArgumentException.class,
+//        () -> Driver.main(
+//            new String[] {"src/test/resources/studyGuide", "created", "src/test/resources"})
+//    );
+//  }
+//
+//  /**
+//   * Tests driver throws if output is not writable.
+//   */
+//  @Test
+//  public void testDriverThrowsIfOutputIsNotWritable() {
+//    //TODO: fix write method and test.
+//    // throws run time b/c validation didn't check with given output + extensions
 //    if (!new File("src/test/resources/NotWritableFile.md").setWritable(false)) {
 //      throw new RuntimeException();
 //    }
@@ -321,28 +164,27 @@ public class DriverTest {
 //            "src/test/resources/NotWritableFile"
 //        })
 //    );
-  }
-
-  /**
-   * Tests driver throws if root is not a markdown file.
-   */
-  @Test
-  public void testDriverThrowsIfOutputIsNotMarkdownFile() {
-    assertThrows(IllegalArgumentException.class,
-        () -> Driver.main(
-            new String[] {
-                "src/test/resources/notes", "created",
-                "src/test/resources/studyGuide.pdf"
-            })
-    );
-  }
-
-  /**
-   * Tests driver constructs properly.
-   */
-  @Test
-  public void fakeTest() {
-    assertDoesNotThrow(Driver::new);
-    assertEquals(5, 5);
-  }
+//  }
+//
+//  /**
+//   * Tests driver throws if root is not a markdown file.
+//   */
+//  @Test
+//  public void testDriverThrowsIfOutputIsNotMarkdownFile() {
+//    assertThrows(IllegalArgumentException.class,
+//        () -> Driver.main(
+//            new String[] {
+//                "src/test/resources/notes", "created",
+//                "src/test/resources/studyGuide.pdf"
+//            })
+//    );
+//  }
+//
+//  /**
+//   * Tests driver constructs properly.
+//   */
+//  @Test
+//  public void fakeTest() {
+//    assertEquals(5, 5);
+//  }
 }

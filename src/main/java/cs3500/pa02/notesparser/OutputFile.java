@@ -1,7 +1,5 @@
 package cs3500.pa02.notesparser;
 
-import cs3500.pa02.writer.BasicWriter;
-import cs3500.pa02.writer.Writer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -62,20 +60,9 @@ public abstract class OutputFile {
   }
 
   /**
-   * Writes this output file to the specified path.
-   *
-   * @param output path to file to be written to
-   */
-  public void write(Path output) {
-    output = Path.of(output + fileExtension());
-    Writer writer = new BasicWriter(output);
-    writer.write(compile());
-  }
-
-  /**
    * Gets the file extension of an output file.
    *
    * @return the file extension of this output file
    */
-  protected abstract String fileExtension();
+  public abstract String fileExtension();
 }

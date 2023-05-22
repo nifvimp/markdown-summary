@@ -55,7 +55,7 @@ public class Summary extends OutputFile {
   }
 
   @Override
-  protected String fileExtension() {
+  public String fileExtension() {
     return ".md";
   }
 }
