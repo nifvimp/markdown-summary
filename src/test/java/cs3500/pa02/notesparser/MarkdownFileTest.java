@@ -12,22 +12,26 @@ import org.junit.jupiter.api.Test;
 public class MarkdownFileTest {
   private MarkdownFile arrays;
   private MarkdownFile vectors;
+  private FileTime arraysModified;
+  private FileTime arraysCreated;
+  private FileTime vectorsModified;
+  private FileTime vectorsCreated;
+
   @BeforeEach
   public void setup() throws ParseException {
+
     // tests initialization when using of method at the same time
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    arraysModified = FileTime.fromMillis(sdf.parse("3/2/2023").getTime());
+    arraysCreated = FileTime.fromMillis(sdf.parse("1/1/2023").getTime());
+    vectorsModified = FileTime.fromMillis(sdf.parse("2/2/2023").getTime());
+    vectorsCreated = FileTime.fromMillis(sdf.parse("2/1/2023").getTime());
     arrays = new MarkdownFile(
         Path.of("src/test/resources/notes/arrays.md"),
-        "arrays.md",
-        FileTime.fromMillis(sdf.parse("3/2/2023").getTime()),
-        FileTime.fromMillis(sdf.parse("1/1/2023").getTime())
-    );
+        "arrays.md", arraysModified, arraysCreated);
     vectors = new MarkdownFile(
         Path.of("src/test/resources/notes/vectors.md"),
-        "vectors.md",
-        FileTime.fromMillis(sdf.parse("2/2/2023").getTime()),
-        FileTime.fromMillis(sdf.parse("2/1/2023").getTime())
-    );
+        "vectors.md", vectorsModified, arraysModified);
   }
 
   @Test
@@ -44,13 +48,13 @@ public class MarkdownFileTest {
 
   @Test
   public void testLastModified() {
-    assertEquals("2023-02-03T05:00:00Z", arrays.lastModified().toString());
-    assertEquals("2023-02-02T05:00:00Z", vectors.lastModified().toString());
+    assertEquals(arraysModified, arrays.lastModified());
+    assertEquals(vectorsModified, vectors.lastModified());
   }
 
   @Test
   public void testCreationTime() {
-    assertEquals("2023-01-01T05:00:00Z", arrays.creationTime().toString());
-    assertEquals("2023-01-02T05:00:00Z", vectors.creationTime().toString());
+    assertEquals(arraysCreated, arrays.creationTime());
+    assertEquals(vectorsCreated, vectors.creationTime());
   }
 }
