@@ -31,7 +31,7 @@ public class MarkdownFileTest {
         "arrays.md", arraysModified, arraysCreated);
     vectors = new MarkdownFile(
         Path.of("src/test/resources/notes/vectors.md"),
-        "vectors.md", vectorsModified, arraysModified);
+        "vectors.md", vectorsModified, vectorsCreated);
   }
 
   @Test
