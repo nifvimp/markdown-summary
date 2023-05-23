@@ -16,7 +16,7 @@ public class BasicWriterTest {
 
   @BeforeEach
   public void setup() {
-    writer = new BasicWriter(OUTPUT);
+    writer = new BasicFileWriter(OUTPUT);
     try {
       Files.delete(OUTPUT);
     } catch (IOException ignored) {

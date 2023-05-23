@@ -10,6 +10,9 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Controls all aspects of the program that runs a study session.
+ */
 public class StudySessionController implements Controller {
   private final Scanner input;
   private final StudySessionView view;
@@ -34,7 +37,7 @@ public class StudySessionController implements Controller {
   public void run() {
     view.greetUser();
     Path questionBank = getQuestionBank();
-    int questionTotal = getQuestionTotal();
+    int questionTotal = getProblemTotal();
     model = new StudySessionModelImpl(questionBank, questionTotal, random);
     Problem currProblem = model.currentProblem();
     while (currProblem != null) {
@@ -46,6 +49,11 @@ public class StudySessionController implements Controller {
     model.exit();
   }
 
+  /**
+   * Gets the path to the spaced repetition file the user wants to practice on.
+   *
+   * @return the path the user inputted
+   */
   private Path getQuestionBank() {
     view.promptUser("Path to Spaced Repetition Question Bank File: ");
     String path = null;
@@ -74,7 +82,12 @@ public class StudySessionController implements Controller {
     return questionBank;
   }
 
-  private int getQuestionTotal() {
+  /**
+   * Gets the number of problems the user wants to practice on.
+   *
+   * @return the number the user inputted
+   */
+  private int getProblemTotal() {
     view.promptUser("Number of Questions you would like to Practice: ");
     String amount = null;
     int questionTotal;
@@ -83,11 +96,11 @@ public class StudySessionController implements Controller {
       questionTotal = Integer.parseInt(amount);
       if (questionTotal < 0) {
         view.promptUser("input cannot be negative.");
-        questionTotal = getQuestionTotal();
+        questionTotal = getProblemTotal();
       }
     } catch (NumberFormatException e) {
       view.promptUser(String.format("'%s' is not a integer.", amount));
-      questionTotal = getQuestionTotal();
+      questionTotal = getProblemTotal();
     }
     return questionTotal;
   }
@@ -99,17 +112,14 @@ public class StudySessionController implements Controller {
    * @param currProblem problem the session is currently on
    */
   private void chooseOption(Problem currProblem) {
-    // TODO: should it show option to show answer of answer was already shown?
     view.showOptions();
     String userInput = input.nextLine();
     switch (userInput) {
       case "1" -> view.showAnswer(currProblem);
       case "2" -> model.update(Difficulty.HARD);
       case "3" -> model.update(Difficulty.EASY);
-      default -> {
-        view.promptUser(String.format("'%s' is not an option.", userInput));
-        chooseOption(currProblem);
-      }
+      case "4" -> model.exit();
+      default -> view.promptUser(String.format("'%s' is not an option.", userInput));
     }
   }
 }

@@ -16,13 +16,13 @@ import org.junit.jupiter.api.Test;
 public class StudySessionImplTest {
   private static final Path SAMPLE = Path.of("src/test/resources/sample.sr");
   private static final long SEED = 0;
-  private StudySessionImpl session;
+  private ProblemSetGeneratorImpl session;
   private List<Problem> problemList;
 
   @BeforeEach
   public void setup() {
     resetFile();
-    session = new StudySessionImpl(SAMPLE, new Random(SEED));
+    session = new ProblemSetGeneratorImpl(SAMPLE, new Random(SEED));
     List<Problem> hard = new ArrayList<>(List.of(
         new Problem(
             "What is the syntax to initialize an array",

@@ -38,6 +38,7 @@ public class StudySessionTerminalViewTest {
           1. See answer
           2. Mark question as hard
           3. Mark question as easy
+          4. Exit
         """, appendable.toString()
     );
   }
@@ -46,7 +47,7 @@ public class StudySessionTerminalViewTest {
   public void testShowQuestion() {
     view.showQuestion(problem);
     assertEquals("""
-        Question
+        Problem: Question
         """, appendable.toString()
     );
   }
@@ -55,7 +56,7 @@ public class StudySessionTerminalViewTest {
   public void testShowAnswer() {
     view.showAnswer(problem);
     assertEquals("""
-        Answer
+        Answer: Answer
         """, appendable.toString()
     );
   }

@@ -1,5 +1,8 @@
 package cs3500.pa02.studysession;
 
+/**
+ * The view of a study session.
+ */
 public interface StudySessionView {
   /**
    * Welcomes the user.

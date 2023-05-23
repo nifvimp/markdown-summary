@@ -2,6 +2,9 @@ package cs3500.pa02.studysession;
 
 import java.io.IOException;
 
+/**
+ * A terminal view of a study session.
+ */
 public class StudySessionTerminalView implements StudySessionView {
   private final Appendable output;
 
@@ -20,18 +23,19 @@ public class StudySessionTerminalView implements StudySessionView {
         Select option:
           1. See answer
           2. Mark question as hard
-          3. Mark question as easy"""
+          3. Mark question as easy
+          4. Exit"""
     );
   }
 
   @Override
   public void showQuestion(Problem problem) {
-    promptUser(problem.question());
+    promptUser("Problem: " + problem.question());
   }
 
   @Override
   public void showAnswer(Problem problem) {
-    promptUser(problem.answer());
+    promptUser("Answer: " + problem.answer());
   }
 
   @Override

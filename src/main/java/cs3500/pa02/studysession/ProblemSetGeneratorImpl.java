@@ -1,6 +1,6 @@
 package cs3500.pa02.studysession;
 
-import cs3500.pa02.writer.BasicWriter;
+import cs3500.pa02.writer.BasicFileWriter;
 import cs3500.pa02.writer.Writer;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -8,16 +8,28 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class StudySessionImpl implements StudySession {
+/**
+ * Generates a random set of problems based on the passed in spaced repetition file
+ * with all the hard problems on top, and then easy problems if there are no hard
+ * problems left.
+ */
+public class ProblemSetGeneratorImpl implements ProblemSetGenerator {
   private final Path questionBank;
   private final List<Problem> problems = new ArrayList<>();
   private final SessionInfo info;
 
-  public StudySessionImpl(Path file, Random random) {
+  /**
+   * Creates a basic problem set generator implementation based on the passed in
+   * spaced repetition file.
+   *
+   * @param file spaced repetition file to base the problem set on
+   * @param random Random object to shuffle by
+   */
+  public ProblemSetGeneratorImpl(Path file, Random random) {
     this.questionBank = file;
     SpacedRepetitionReader reader = new SpacedRepetitionReader(file);
-    List<Problem> hard = reader.getHardQuestions();
-    List<Problem> easy = reader.getEasyQuestions();
+    List<Problem> hard = reader.getHardProblems();
+    List<Problem> easy = reader.getEasyProblems();
     Collections.shuffle(hard, random);
     Collections.shuffle(easy, random);
     problems.addAll(hard);
@@ -36,7 +48,8 @@ public class StudySessionImpl implements StudySession {
     if (problems.size() < totalQuestions) {
       return problems;
     }
-    // pass reference of Problems up so that any change is reflected here
+    // pass reference of Problems up so that any change is reflected here and
+    // therefore can be rewritten to the file here
     return problems.subList(0, totalQuestions);
   }
 
@@ -47,9 +60,7 @@ public class StudySessionImpl implements StudySession {
 
   @Override
   public void write() {
-    // any changes in the problems passed up will be reflected here when rewriting
-    // the problems
-    Writer writer = new BasicWriter(questionBank);
+    Writer writer = new BasicFileWriter(questionBank);
     List<String> encoded = new SpacedRepetitionEncoder().interpret(problems);
     writer.write(encoded);
   }

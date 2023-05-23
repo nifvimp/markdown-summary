@@ -56,7 +56,9 @@ public class StudySessionModelImplTest {
 
   @Test
   public void testCurrentProblem() {
-    assertNull(new StudySessionModelImpl(SAMPLE, 0).currentProblem());
+    assertNull(new StudySessionModelImpl(
+        SAMPLE, 0, new Random(SEED)).currentProblem()
+    );
     for (Problem problem : problemList) {
       assertEquals(problem, model.currentProblem());
       model.update(Difficulty.EASY);
@@ -106,14 +108,25 @@ public class StudySessionModelImplTest {
           Updated Total Easy Questions: 3""",
         model.getInfo());
     assertThrows(NoSuchElementException.class, () -> model.update(Difficulty.EASY));
+    String expected = String.join("\n",
+            new SpacedRepetitionEncoder()
+                .interpret(problemList))
+        .replaceAll("HARD", "EASY");
+    String result;
+    try {
+      result = Files.readString(SAMPLE);
+    } catch (IOException e) {
+      throw new RuntimeException(String.format("Error reading sample file '%s'.", SAMPLE), e);
+    }
+    assertEquals(expected, result);
   }
 
   @Test
   public void testExit() {
     model.update(Difficulty.EASY);
     model.update(Difficulty.EASY);
-    model.update(Difficulty.EASY);
     model.exit();
+    assertNull(model.currentProblem());
     String expected = String.join("\n",
         new SpacedRepetitionEncoder()
             .interpret(problemList))

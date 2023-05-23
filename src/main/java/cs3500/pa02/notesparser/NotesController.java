@@ -1,10 +1,14 @@
 package cs3500.pa02.notesparser;
 
 import cs3500.pa02.Controller;
-import cs3500.pa02.writer.BasicWriter;
+import cs3500.pa02.writer.BasicFileWriter;
 import cs3500.pa02.writer.Writer;
 import java.nio.file.Path;
 
+/**
+ * Controls all aspects of the program that involves creating a summary and spaced repetition
+ * file based on the passed in parameters.
+ */
 public class NotesController implements Controller {
   private final Path root;
   private final OrderingFlag order;
@@ -23,8 +27,8 @@ public class NotesController implements Controller {
   public void run() {
     Summary studyGuide = new Summary(root, order);
     QuestionBank questionBank = new QuestionBank(root);
-    Writer studyGuideWriter = new BasicWriter(Path.of(output + studyGuide.fileExtension()));
-    Writer questionBankWriter = new BasicWriter(Path.of(output + questionBank.fileExtension()));
+    Writer studyGuideWriter = new BasicFileWriter(Path.of(output + studyGuide.fileExtension()));
+    Writer questionBankWriter = new BasicFileWriter(Path.of(output + questionBank.fileExtension()));
     studyGuideWriter.write(studyGuide.compile());
     questionBankWriter.write(questionBank.compile());
   }

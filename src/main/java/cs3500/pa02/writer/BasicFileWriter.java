@@ -5,8 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-
-public class BasicWriter implements Writer {
+/**
+ * A basic implementation of a file writer.
+ */
+public class BasicFileWriter implements Writer {
   private final Path file;
 
   /**
@@ -14,7 +16,7 @@ public class BasicWriter implements Writer {
    *
    * @param file file to write to
    */
-  public BasicWriter(Path file) {
+  public BasicFileWriter(Path file) {
     this.file = file;
   }
 

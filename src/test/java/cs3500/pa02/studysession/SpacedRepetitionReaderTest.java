@@ -40,7 +40,7 @@ public class SpacedRepetitionReaderTest {
             "Vector<type> v = new Vector();",
             Difficulty.HARD
         )
-    ), reader.getHardQuestions());
+    ), reader.getHardProblems());
   }
 
   @Test
@@ -50,6 +50,6 @@ public class SpacedRepetitionReaderTest {
             "Yes, but only the elements, not the size of the array",
             Difficulty.EASY
         )
-    ), reader.getEasyQuestions());
+    ), reader.getEasyProblems());
   }
 }

@@ -3,10 +3,18 @@ package cs3500.pa02.studysession;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Transforms the contents of a spaced repetition file into a set of problems.
+ */
 public class SpacedRepetitionDecoder implements Interpreter<String, Problem> {
-
-  // TODO: change delimiter
   private static final String DELIMITER = ":::";
+
+  /**
+   * Transforms the contents of a spaced repetition file into a set of problems.
+   *
+   * @param fileContent file content to interpret
+   * @return interpretation of contents of the file
+   */
   @Override
   public List<Problem> interpret(List<String> fileContent) {
     List<Problem> problems = new ArrayList<>();
@@ -17,6 +25,12 @@ public class SpacedRepetitionDecoder implements Interpreter<String, Problem> {
     return problems;
   }
 
+  /**
+   * Transform a line from a spaced repetition file into a problem.
+   *
+   * @param line line to interpret
+   * @return interpretation of line
+   */
   private Problem interpret(String line) {
     String[] params = line.split(DELIMITER);
     String question;
