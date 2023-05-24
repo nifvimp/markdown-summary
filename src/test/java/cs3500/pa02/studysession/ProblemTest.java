@@ -86,7 +86,7 @@ public class ProblemTest {
   public void testEquals() {
     Problem problemA = new Problem("A", "B", Difficulty.EASY);
     Problem problemB = new Problem("A", "B", Difficulty.EASY);
-    assertEquals(problemA, problemB);
+    assertEquals(problemA, problemA);
     assertEquals(problemA, problemB);
     assertNotEquals(easy, hard);
     Problem problemC = new Problem("A", "A", Difficulty.EASY);

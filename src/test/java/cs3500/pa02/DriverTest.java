@@ -2,7 +2,6 @@ package cs3500.pa02;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -75,11 +74,9 @@ public class DriverTest {
     ), questionBank);
   }
 
-  // TODO: write integration test for study session
-  @Test
-  public void testStudySession() {
-
-  }
+  // Can't test study session part of the project by directly calling main due to
+  //  it being way too complicated to pass in my own input stream by just calling
+  //  the driver main.
 
   /**
    * Tests driver throws if incorrect number of  arguments.
