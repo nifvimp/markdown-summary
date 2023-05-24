@@ -1,6 +1,6 @@
 package cs3500.pa02.notesparser;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +14,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests if the NotesController works as intended.
+ */
 public class NotesControllerTest {
   private static final Path NOTES = Path.of("src/test/resources/notes");
   private static final Path OUTPUT = Path.of("src/test/resources/studyGuide");
@@ -23,29 +26,29 @@ public class NotesControllerTest {
   private static final Path VECTORS = Path.of("src/test/resources/notes/vectors.md");
   private static final String ARRAYS_CONTENTS =
       """
-      # Java Arrays
-      - An **array** is a collection of variables of the same type
+          # Java Arrays
+          - An **array** is a collection of variables of the same type
 
-      ## Declaring an Array
-      - General Form: type[] arrayName;
-      - only creates a reference
-      - no array has actually been created yet
+          ## Declaring an Array
+          - General Form: type[] arrayName;
+          - only creates a reference
+          - no array has actually been created yet
 
-      ## Creating an Array (Instantiation)
-      - General form:  arrayName = new type[numberOfElements];
-      - numberOfElements must be a positive Integer.
-      - Gotcha: Array size is not modifiable once instantiated.""";
+          ## Creating an Array (Instantiation)
+          - General form:  arrayName = new type[numberOfElements];
+          - numberOfElements must be a positive Integer.
+          - Gotcha: Array size is not modifiable once instantiated.""";
   private static final String VECTORS_CONTENTS =
       """
-      # Vectors
-      - Vectors act like resizable arrays
+          # Vectors
+          - Vectors act like resizable arrays
 
-      ## Declaring a vector
-      - General Form: Vector<type> v = new Vector();
-      - type needs to be a valid reference type
+          ## Declaring a vector
+          - General Form: Vector<type> v = new Vector();
+          - type needs to be a valid reference type
 
-      ## Adding an element to a vector
-      - v.add(object of type);""";
+          ## Adding an element to a vector
+          - v.add(object of type);""";
   private Set<String> questions;
 
   /**
@@ -55,6 +58,7 @@ public class NotesControllerTest {
   public static void fileSetup() {
     try {
       Files.delete(STUDY_GUIDE);
+      Files.delete(SPACED_REPETITION);
     } catch (IOException ignored) {
       // An empty catch block
     }
@@ -81,6 +85,9 @@ public class NotesControllerTest {
     }
   }
 
+  /**
+   * Sets up expected questions.
+   */
   @BeforeEach
   public void setupQuestions() {
     questions = Set.of(

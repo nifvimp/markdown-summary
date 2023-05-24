@@ -14,10 +14,10 @@ public class SessionInfo {
    * Creates a new session info object with the specified information.
    *
    * @param answeredCount total problems attempted
-   * @param hardCount total number of hard problems
-   * @param easyCount total number of easy problems
-   * @param hardChanged total number of hard problems changed to easy
-   * @param easyChanged total number of easy problems changed to hard
+   * @param hardCount     total number of hard problems
+   * @param easyCount     total number of easy problems
+   * @param hardChanged   total number of hard problems changed to easy
+   * @param easyChanged   total number of easy problems changed to hard
    */
   public SessionInfo(int answeredCount, int hardCount, int easyCount,
                      int hardChanged, int easyChanged) {
@@ -45,12 +45,12 @@ public class SessionInfo {
    */
   public String getInfo() {
     return String.format("""
-        Session Information:
-          Questions Answered: %s
-          Questions Changed from Easy to Hard: %s
-          Questions Changed from Hard to Easy: %s
-          Updated Total Hard Questions: %s
-          Updated Total Easy Questions: %s""",
+            Session Information:
+              Questions Answered: %s
+              Questions Changed from Easy to Hard: %s
+              Questions Changed from Hard to Easy: %s
+              Updated Total Hard Questions: %s
+              Updated Total Easy Questions: %s""",
         this.answeredCount,
         this.easyChanged,
         this.hardChanged,

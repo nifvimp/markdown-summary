@@ -10,8 +10,7 @@ import java.util.List;
  * A spaced repetition file reader.
  */
 public class SpacedRepetitionReader {
-  private final List<Problem> hardProblems = new ArrayList<>();
-  private final List<Problem> easyProblems = new ArrayList<>();
+  private final List<List<Problem>> problemList;
 
   /**
    * Creates a spaced repetition file reader that reads the given file.
@@ -19,6 +18,10 @@ public class SpacedRepetitionReader {
    * @param file spaced repetition file to read
    */
   public SpacedRepetitionReader(Path file) {
+    problemList = new ArrayList<>();
+    for (Difficulty ignored : Difficulty.values()) {
+      problemList.add(new ArrayList<>());
+    }
     Interpreter<String, Problem> decoder = new SpacedRepetitionDecoder();
     List<Problem> problems;
     try {
@@ -29,10 +32,8 @@ public class SpacedRepetitionReader {
       );
     }
     for (Problem problem : problems) {
-      switch(problem.difficulty()) {
-        case HARD -> hardProblems.add(problem);
-        case EASY -> easyProblems.add(problem);
-      }
+      Difficulty difficulty = problem.difficulty();
+      problemList.get(difficulty.ordinal()).add(problem);
     }
   }
 
@@ -42,7 +43,7 @@ public class SpacedRepetitionReader {
    * @return list of hard problems
    */
   public List<Problem> getHardProblems() {
-    return hardProblems;
+    return problemList.get(Difficulty.HARD.ordinal());
   }
 
   /**
@@ -51,6 +52,6 @@ public class SpacedRepetitionReader {
    * @return list of easy problems
    */
   public List<Problem> getEasyProblems() {
-    return easyProblems;
+    return problemList.get(Difficulty.EASY.ordinal());
   }
 }

@@ -1,6 +1,9 @@
 package cs3500.pa02.studysession;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,16 +16,22 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests if the StudySessionImpl works as intented.
+ */
 public class StudySessionImplTest {
   private static final Path SAMPLE = Path.of("src/test/resources/sample.sr");
   private static final long SEED = 0;
-  private ProblemSetGeneratorImpl session;
+  private StudySessionImpl session;
   private List<Problem> problemList;
 
+  /**
+   * Sets up expected output.
+   */
   @BeforeEach
   public void setup() {
     resetFile();
-    session = new ProblemSetGeneratorImpl(SAMPLE, new Random(SEED));
+    session = new StudySessionImpl(SAMPLE, new Random(SEED));
     List<Problem> hard = new ArrayList<>(List.of(
         new Problem(
             "What is the syntax to initialize an array",
@@ -48,11 +57,17 @@ public class StudySessionImplTest {
     problemList.addAll(easy);
   }
 
+  /**
+   * Resets the test file after every test.
+   */
   @AfterEach
   public void cleanup() {
     resetFile();
   }
 
+  /**
+   * Tests if the study session implementation gives a satisfactory problem set.
+   */
   @Test
   public void testGetProblems() {
     assertEquals(problemList.subList(0, 1), session.getProblems(1));
@@ -61,6 +76,18 @@ public class StudySessionImplTest {
     assertEquals(problemList, session.getProblems(100));
   }
 
+  /**
+   * Tests if get problems throws if the input is negative.
+   */
+  @Test
+  public void testGetProblemThrowsIfNegative() {
+    assertThrows(IllegalArgumentException.class,
+        () -> session.getProblems(-100));
+  }
+
+  /**
+   * Tests if the info the study session implementation gets is correct.
+   */
   @Test
   public void testGetInfo() {
     assertEquals(
@@ -75,12 +102,11 @@ public class StudySessionImplTest {
     );
   }
 
+  /**
+   * Tests if the study session updates the spaced repetition file correctly
+   */
   @Test
   public void testWrite() {
-    String expected = String.join("\n",
-            new SpacedRepetitionEncoder()
-                .interpret(problemList))
-        .replaceAll("HARD", "EASY");
 
     List<Problem> problems = session.getProblems(3);
     assertTrue(problems.get(0).updateDifficulty(Difficulty.EASY));
@@ -93,9 +119,16 @@ public class StudySessionImplTest {
     } catch (IOException e) {
       throw new RuntimeException(String.format("Error reading sample file '%s'", SAMPLE), e);
     }
+    String expected = String.join("\n",
+            new SpacedRepetitionEncoder()
+                .interpret(problemList))
+        .replaceAll("HARD", "EASY");
     assertEquals(expected, updatedContents);
   }
 
+  /**
+   * Resets the test file.
+   */
   private static void resetFile() {
     try {
       Files.write(SAMPLE, """

@@ -13,8 +13,8 @@ public class Problem {
   /**
    * Creates a new problem with the specified question, answer and difficulty.
    *
-   * @param question the problem
-   * @param answer answer to problem
+   * @param question   the problem
+   * @param answer     answer to problem
    * @param difficulty difficulty of problem
    */
   public Problem(String question, String answer, Difficulty difficulty) {

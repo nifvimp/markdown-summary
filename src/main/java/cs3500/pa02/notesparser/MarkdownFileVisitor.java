@@ -59,7 +59,7 @@ public class MarkdownFileVisitor implements FileVisitor<Path> {
    * Invoked for a file in a directory. Adds the visited file to this MarkdownFileVisitor's
    * foundMarkdownFiles list if the file has the '.md' file extension.
    *
-   * @param file a reference to the file
+   * @param file  a reference to the file
    * @param attrs the file's basic attributes
    * @return the visit result
    */
@@ -85,7 +85,7 @@ public class MarkdownFileVisitor implements FileVisitor<Path> {
   /**
    * Invoked for a directory before entries in the directory are visited.
    *
-   * @param dir a reference to the directory
+   * @param dir   a reference to the directory
    * @param attrs the directory's basic attributes
    * @return the visit result
    */
@@ -100,7 +100,7 @@ public class MarkdownFileVisitor implements FileVisitor<Path> {
    * could not be read, the file is a directory that could not be opened, and other reasons.
    *
    * @param file a reference to the file
-   * @param exc the I/O exception that prevented the file from being visited
+   * @param exc  the I/O exception that prevented the file from being visited
    * @return the visit result
    */
   @Override
@@ -116,11 +116,9 @@ public class MarkdownFileVisitor implements FileVisitor<Path> {
    * iterating over the directory).
    *
    * @param dir a reference to the directory
-   * @param exc
-   *        {@code null} if the iteration of the directory completes without
-   *        an error; otherwise the I/O exception that caused the iteration
-   *        of the directory to complete prematurely
-   *
+   * @param exc {@code null} if the iteration of the directory completes without
+   *            an error; otherwise the I/O exception that caused the iteration
+   *            of the directory to complete prematurely
    * @return the visit result
    */
   @Override

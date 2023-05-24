@@ -13,6 +13,15 @@ public class NotesController implements Controller {
   private final Path root;
   private final OrderingFlag order;
   private final Path output;
+
+  /**
+   * Makes a new program controller that will parse through the markdown files in the given
+   * root directory.
+   *
+   * @param root   root directory of markdown files
+   * @param order  flag to organize summary file by
+   * @param output output path of files
+   */
   public NotesController(Path root, OrderingFlag order, Path output) {
     this.root = root;
     this.order = order;

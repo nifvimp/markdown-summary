@@ -1,6 +1,7 @@
 package cs3500.pa02.notesparser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
@@ -24,43 +25,45 @@ public class SortByCreatedTest {
 
   /**
    * Sets up fake files to be sorted.
-   *
-   * @throws ParseException if code is incorrect
    */
   @BeforeEach
-  public void setup() throws ParseException {
+  public void setup() {
     files = new ArrayList<>();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    arrays = new MarkdownFile(
-        Path.of("src/test/resources/pa01Test/arrays.md"),
-        "arrays.md",
-        FileTime.fromMillis(sdf.parse("3/2/2023").getTime()),
-        FileTime.fromMillis(sdf.parse("1/1/2023").getTime())
-    );
-    vectors = new MarkdownFile(
-        Path.of("src/test/resources/pa01Test/vectors.md"),
-        "vectors.md",
-        FileTime.fromMillis(sdf.parse("2/2/2023").getTime()),
-        FileTime.fromMillis(sdf.parse("2/1/2023").getTime())
-    );
-    regex = new MarkdownFile(
-        Path.of("src/test/resources/pa01Test/Regex.md"),
-        "Regex.md",
-        FileTime.fromMillis(sdf.parse("4/2/2023").getTime()),
-        FileTime.fromMillis(sdf.parse("5/1/2023").getTime())
-    );
-    regexDup = new MarkdownFile(
-        Path.of("src/test/resources/pa01Test/RegexDup.md"),
-        "RegexDup.md",
-        FileTime.fromMillis(sdf.parse("4/2/2023").getTime()),
-        FileTime.fromMillis(sdf.parse("5/1/2023").getTime())
-    );
-    formatting = new MarkdownFile(
-        Path.of("src/test/resources/pa01Test/formatting.md"),
-        "formatting.md",
-        FileTime.fromMillis(sdf.parse("5/2/2023").getTime()),
-        FileTime.fromMillis(sdf.parse("3/1/2023").getTime())
-    );
+    try {
+      arrays = new MarkdownFile(
+          Path.of("src/test/resources/pa01Test/arrays.md"),
+          "arrays.md",
+          FileTime.fromMillis(sdf.parse("3/2/2023").getTime()),
+          FileTime.fromMillis(sdf.parse("1/1/2023").getTime())
+      );
+      vectors = new MarkdownFile(
+          Path.of("src/test/resources/pa01Test/vectors.md"),
+          "vectors.md",
+          FileTime.fromMillis(sdf.parse("2/2/2023").getTime()),
+          FileTime.fromMillis(sdf.parse("2/1/2023").getTime())
+      );
+      regex = new MarkdownFile(
+          Path.of("src/test/resources/pa01Test/Regex.md"),
+          "Regex.md",
+          FileTime.fromMillis(sdf.parse("4/2/2023").getTime()),
+          FileTime.fromMillis(sdf.parse("5/1/2023").getTime())
+      );
+      regexDup = new MarkdownFile(
+          Path.of("src/test/resources/pa01Test/RegexDup.md"),
+          "RegexDup.md",
+          FileTime.fromMillis(sdf.parse("4/2/2023").getTime()),
+          FileTime.fromMillis(sdf.parse("5/1/2023").getTime())
+      );
+      formatting = new MarkdownFile(
+          Path.of("src/test/resources/pa01Test/formatting.md"),
+          "formatting.md",
+          FileTime.fromMillis(sdf.parse("5/2/2023").getTime()),
+          FileTime.fromMillis(sdf.parse("3/1/2023").getTime())
+      );
+    } catch (ParseException e) {
+      fail("Parsing of dateTime failed.");
+    }
     files.add(arrays);
     files.add(vectors);
     files.add(regex);

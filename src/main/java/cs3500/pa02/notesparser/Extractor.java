@@ -8,8 +8,8 @@ import java.nio.file.Path;
  * @param <T> type of extraction result
  */
 public interface Extractor<T> {
-/**
- * Extracts the necessary information out of file.
- */
+  /**
+   * Extracts the necessary information out of file.
+   */
   T extract(Path file);
 }

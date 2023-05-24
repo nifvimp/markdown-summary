@@ -23,7 +23,7 @@ public abstract class OutputFile {
    * Creates a output file based on the given root and given interpreter.
    *
    * @param extractor markdown to output file interpreter
-   * @param root root directory of output file
+   * @param root      root directory of output file
    */
   public OutputFile(MarkdownStripper extractor, Path root) {
     this.extractor = extractor;

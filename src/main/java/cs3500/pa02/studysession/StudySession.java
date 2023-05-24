@@ -3,9 +3,9 @@ package cs3500.pa02.studysession;
 import java.util.List;
 
 /**
- * Handles getting the specified problem set to practice on for the current study session.
+ * Gets and generates the information required to start a study session.
  */
-public interface ProblemSetGenerator {
+public interface StudySession {
   /**
    * Gets a problem set of the specified size that the user will practice on. The order
    * of the problem set will be decided by the implementation.

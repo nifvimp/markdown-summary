@@ -18,7 +18,7 @@ public class Summary extends OutputFile {
    * Constructs a summary of all the markdown files from the root directory with the specified
    * organization.
    *
-   * @param root root directory
+   * @param root  root directory
    * @param order flag to organize summary
    */
   public Summary(Path root, OrderingFlag order) {

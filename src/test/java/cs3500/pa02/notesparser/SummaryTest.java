@@ -1,6 +1,7 @@
 package cs3500.pa02.notesparser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ public class SummaryTest {
       - General form:  arrayName = new type[numberOfElements];
       - numberOfElements must be a positive Integer.
       - Gotcha: Array size is not modifiable once instantiated.
-      
+            
       # Vectors
       - Vectors act like resizable arrays
 
@@ -35,43 +36,28 @@ public class SummaryTest {
       - v.add(object of type);""";
   private final Summary summary = new Summary(NOTES, OrderingFlag.FILENAME);
 
+  /**
+   * Tests if the output file compiles the correct output.
+   */
   @Test
   public void testCompile() {
     assertEquals(EXPECTED, String.join("\n", summary.compile()));
   }
 
+  /**
+   * Tests if the output file gives the correct file extension.
+   */
   @Test
   public void testFileExtension() {
     assertEquals(".md", summary.fileExtension());
   }
 
-
-// TODO: move ot  writer tests
-
-//  /**
-//   * Tests if write throws if program can't write.
-//   */
-//  @Test
-//  public void testWriteThrowsIfCanNotWriteToOutput() {
-//    Summary s = new Summary(Path.of("src/test/resources/notes"), OrderingFlag.FILENAME);
-//    File notWritable = new File("src/test/resources/NotWritableFile.md");
-//    if (!notWritable.setWritable(false)) {
-//      throw new RuntimeException();
-//    }
-//    assertThrows(RuntimeException.class,
-//        () -> s.write(Path.of("src/test/resources/NotWritableFile"))
-//    );
-//    if (!notWritable.setWritable(true)) {
-//      throw new RuntimeException();
-//    }
-//  }
-//
-//  /**
-//   * Tests if compile throws if can't parse root for files.
-//   */
-//  @Test
-//  public void testCompileThrowsIfWalkFails()  {
-//    Summary s = new Summary(Path.of("src/test/fake"), OrderingFlag.FILENAME);
-//    assertThrows(RuntimeException.class, s::compile);
-//  }
+  /**
+   * Tests if compile throws if can't parse root for files.
+   */
+  @Test
+  public void testCompileThrowsIfWalkFails() {
+    Summary s = new Summary(Path.of("src/test/fake"), OrderingFlag.FILENAME);
+    assertThrows(RuntimeException.class, s::compile);
+  }
 }

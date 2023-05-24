@@ -1,7 +1,5 @@
 package cs3500.pa02.notesparser;
 
-import static cs3500.pa02.Util.escapeAllRegexMetaCharacters;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -12,9 +10,10 @@ import java.util.Scanner;
  * Strips the contents of a markdown file down to just its notable parts.
  */
 public class MarkdownStripper implements Extractor<List<String>> {
-  // TODO: fix issue where stripper can't parse files with no headers
   /**
    * Strips the contents of a markdown file that was given down to just its notable parts.
+   * Does not handle cases where the file is improperly formatted, especially when phrases
+   * are not nested in headers.
    *
    * @param file markdown file to strip
    * @return result of stripping
@@ -71,7 +70,7 @@ public class MarkdownStripper implements Extractor<List<String>> {
   /**
    * Gets contents of the file seperated by which headers the text falls under.
    *
-   * @param file path to markdown file to get headers from
+   * @param file    path to markdown file to get headers from
    * @param headers list of headers of file
    * @return List of strings that represent the contents of the file seperated by which header
    *      the text falls under
@@ -88,6 +87,24 @@ public class MarkdownStripper implements Extractor<List<String>> {
     }
     reader.close();
     return contents;
+  }
+
+  /**
+   * Escapes all the regex meta characters in the input.
+   *
+   * @param input list of strings to escape
+   * @return escaped version of input
+   */
+  public static List<String> escapeAllRegexMetaCharacters(List<String> input) {
+    List<String> output = new ArrayList<>();
+    // this \\\\ interpreted as find '\'
+    String regex = "[.+*?^$()\\[\\]{}|\\\\]";
+    for (String str : input) {
+      // this \\\\ interpreted as replace with '\\' + found character.
+      str = str.replaceAll(regex, "\\\\$0");
+      output.add(str);
+    }
+    return output;
   }
 
   /**

@@ -1,15 +1,21 @@
 package cs3500.pa02.studysession;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests if SpacedRepetitionEncoder encodes problems correctly
+ */
 public class SpacedRepetitionEncoderTest {
   private List<Problem> sample;
   private final SpacedRepetitionEncoder encoder = new SpacedRepetitionEncoder();
 
+  /**
+   * Setting up test problems
+   */
   @BeforeEach
   public void setup() {
     sample = List.of(
@@ -28,6 +34,10 @@ public class SpacedRepetitionEncoderTest {
         ));
   }
 
+  /**
+   * Tests if the encoder encodes the problems correctly when turning into strings to put
+   * back into the spaced repetition question bank file.
+   */
   @Test
   public void testInterpret() {
     List<String> expected = List.of(

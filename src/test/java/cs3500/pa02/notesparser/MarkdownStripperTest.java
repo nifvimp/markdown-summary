@@ -1,16 +1,24 @@
 package cs3500.pa02.notesparser;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests if the MarkdownStripper strips markdown files correctly
+ */
 public class MarkdownStripperTest {
   private static final Path arrays = Path.of("src/test/resources/notes/arrays.md");
   private static final Path vectors = Path.of("src/test/resources/notes/vectors.md");
   private final MarkdownStripper stripper = new MarkdownStripper();
 
+  /**
+   * Tests if the stripper extracts from a markdown file correctly.
+   */
   @Test
   public void testExtractOne() {
     List<String> extracted = stripper.extract(arrays);
@@ -34,6 +42,9 @@ public class MarkdownStripperTest {
     );
   }
 
+  /**
+   * Tests if the stripper extracts from a markdown file correctly.
+   */
   @Test
   public void testExtractTwo() {
     List<String> extracted = stripper.extract(vectors);
@@ -53,6 +64,9 @@ public class MarkdownStripperTest {
     );
   }
 
+  /**
+   * Tests if the stripper detects headers correctly.
+   */
   @Test
   public void testIsHeader() {
     assertTrue(stripper.isHeader("# header"));

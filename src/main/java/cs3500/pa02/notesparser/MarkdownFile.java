@@ -9,8 +9,8 @@ import java.nio.file.attribute.FileTime;
 /**
  * Represents a markdown file.
  *
- * @param path path to file
- * @param filename name of file
+ * @param path         path to file
+ * @param filename     name of file
  * @param lastModified time file was last modified
  * @param creationTime time file was creation time
  */

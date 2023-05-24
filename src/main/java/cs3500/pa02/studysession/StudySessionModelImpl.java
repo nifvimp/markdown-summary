@@ -9,7 +9,7 @@ import java.util.Random;
  * A basic implementation of a study session model.
  */
 public class StudySessionModelImpl implements StudySessionModel {
-  private final ProblemSetGenerator session;
+  private final StudySession session;
   private final List<Problem> problems;
   private int currProblemIndex;
   private final SessionInfo info;
@@ -18,12 +18,12 @@ public class StudySessionModelImpl implements StudySessionModel {
    * Starts a new study session based on the specified spaced repetition file of
    * the specified length.
    *
-   * @param questionBank path to the spaced repetition file to base session on
+   * @param questionBank   path to the spaced repetition file to base session on
    * @param totalQuestions number of problems to practice on during the session
-   * @param random Random object to shuffle by
+   * @param random         Random object to shuffle by
    */
   public StudySessionModelImpl(Path questionBank, int totalQuestions, Random random) {
-    this.session = new ProblemSetGeneratorImpl(questionBank, random);
+    this.session = new StudySessionImpl(questionBank, random);
     this.problems = this.session.getProblems(totalQuestions);
     this.info = this.session.getInfo();
     this.currProblemIndex = 0;

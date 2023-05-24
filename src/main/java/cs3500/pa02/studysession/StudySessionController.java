@@ -1,10 +1,8 @@
 package cs3500.pa02.studysession;
 
 import cs3500.pa02.Controller;
-import cs3500.pa02.Util;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Random;
@@ -19,12 +17,25 @@ public class StudySessionController implements Controller {
   private final Random random;
   private StudySessionModel model;
 
+  /**
+   * Makes a new study session that is randomized according to the random object passed in.
+   *
+   * @param input  where teh session will get input from
+   * @param view   the view the study session will use
+   * @param random the random the session will use
+   */
   public StudySessionController(Readable input, StudySessionView view, Random random) {
     this.input = new Scanner(Objects.requireNonNull(input));
     this.view = Objects.requireNonNull(view);
     this.random = random;
   }
 
+  /**
+   * Makes a new study session.
+   *
+   * @param input where the session will get input from
+   * @param view  the view the study session will use
+   */
   public StudySessionController(Readable input, StudySessionView view) {
     this(input, view, new Random());
   }
@@ -61,22 +72,12 @@ public class StudySessionController implements Controller {
     try {
       path = input.nextLine();
       questionBank = Path.of(path);
-      String extension = Util.extractFileExtension(questionBank);
       if (!Files.exists(questionBank)) {
-        throw new NoSuchFileException(path);
-      } else if (!extension.equals(".sr")) {
-        throw new IllegalArgumentException(
-            String.format("'%s' is not a spaced repetition file.", path)
-        );
+        view.promptUser(String.format("the file '%s' does not exist.", path));
+        questionBank = getQuestionBank();
       }
     } catch (InvalidPathException e) {
       view.promptUser(String.format("'%s' is not a valid path.", path));
-      questionBank = getQuestionBank();
-    }  catch (NoSuchFileException e) {
-      view.promptUser(String.format("the file '%s' does not exist.", path));
-      questionBank = getQuestionBank();
-    } catch (IllegalArgumentException e) {
-      view.promptUser(String.format("'%s' is not a spaced repetition file.", path));
       questionBank = getQuestionBank();
     }
     return questionBank;

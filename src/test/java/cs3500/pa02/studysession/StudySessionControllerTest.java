@@ -1,6 +1,7 @@
 package cs3500.pa02.studysession;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -13,32 +14,46 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests if the StudySessionController works as intended.
+ */
 public class StudySessionControllerTest {
   private static final long SEED = 0;
   private static final Path SAMPLE = Path.of("src/test/resources/sample.sr");
 
+  /**
+   * Sets up test files.
+   */
   @BeforeEach
   public void setup() {
     resetFile();
   }
 
+  /**
+   * Resets test files after a test.
+   */
   @AfterEach
   public void cleanup() {
     resetFile();
   }
 
+  /**
+   * Tests if the output of the program with the given inputs is the same as the
+   * expected output.
+   */
   @Test
   public void testRun() {
     Random random = new Random(SEED);
     Appendable output = new StringBuilder();
     Readable instructions = new StringReader("""
         not a path
+        bad/|\\path
         src/test/resources/sample.sr
         not a number
         -1
         10
         10
-        
+                
         1
         2
         1
@@ -53,7 +68,9 @@ public class StudySessionControllerTest {
     assertEquals("""
         Welcome to the Spaced Repetition Study Session!
         Path to Spaced Repetition Question Bank File:\s
-        'not a path' is not a spaced repetition file.
+        the file 'not a path' does not exist.
+        Path to Spaced Repetition Question Bank File:\s
+        'bad/|\\path' is not a valid path.
         Path to Spaced Repetition Question Bank File:\s
         Number of Questions you would like to Practice:\s
         'not a number' is not a integer.
@@ -125,7 +142,7 @@ public class StudySessionControllerTest {
     Set<String> result = null;
     try {
       result = new HashSet<>(Files.readAllLines(SAMPLE));
-    } catch(IOException e) {
+    } catch (IOException e) {
       fail(String.format("Error reading sample file '%s'", SAMPLE));
     }
     assertEquals(Set.of(
@@ -135,6 +152,9 @@ public class StudySessionControllerTest {
     ), result);
   }
 
+  /**
+   * Tests if the program works correctly if the fourth option, exit is selected.
+   */
   @Test
   public void testRunExitEarly() {
     Random random = new Random(SEED);
@@ -185,7 +205,7 @@ public class StudySessionControllerTest {
     Set<String> result = null;
     try {
       result = new HashSet<>(Files.readAllLines(SAMPLE));
-    } catch(IOException e) {
+    } catch (IOException e) {
       fail(String.format("Error reading sample file '%s'", SAMPLE));
     }
     assertEquals(Set.of(
@@ -195,6 +215,9 @@ public class StudySessionControllerTest {
     ), result);
   }
 
+  /**
+   * Resets the test file.
+   */
   public static void resetFile() {
     try {
       Files.write(SAMPLE, """

@@ -5,5 +5,5 @@ life]] #fake header
 - ]] you get to join the cool kids
 club
 
-## Formatting is for pros!?
+## Formatting ::: is for pros!?
 - [[do not format like this.

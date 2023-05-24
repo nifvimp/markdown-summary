@@ -9,23 +9,20 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Generates a random set of problems based on the passed in spaced repetition file
- * with all the hard problems on top, and then easy problems if there are no hard
- * problems left.
+ *
  */
-public class ProblemSetGeneratorImpl implements ProblemSetGenerator {
+public class StudySessionImpl implements StudySession {
   private final Path questionBank;
   private final List<Problem> problems = new ArrayList<>();
   private final SessionInfo info;
 
   /**
-   * Creates a basic problem set generator implementation based on the passed in
-   * spaced repetition file.
+   * Creates a study session based on the spaced repetition file passed in.
    *
-   * @param file spaced repetition file to base the problem set on
+   * @param file   spaced repetition file to base the problem set on
    * @param random Random object to shuffle by
    */
-  public ProblemSetGeneratorImpl(Path file, Random random) {
+  public StudySessionImpl(Path file, Random random) {
     this.questionBank = file;
     SpacedRepetitionReader reader = new SpacedRepetitionReader(file);
     List<Problem> hard = reader.getHardProblems();
@@ -39,6 +36,13 @@ public class ProblemSetGeneratorImpl implements ProblemSetGenerator {
     info = new SessionInfo(hardCount, easyCount);
   }
 
+  /**
+   * Generates a random set of problems with all the hard problems on top, and then easy
+   * problems if there are no hard problems left.
+   *
+   * @param totalQuestions size of the problem set
+   * @return problem set to practice on
+   */
   @Override
   public List<Problem> getProblems(int totalQuestions) {
     if (totalQuestions < 0) {
