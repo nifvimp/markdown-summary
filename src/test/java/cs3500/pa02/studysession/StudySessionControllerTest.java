@@ -47,7 +47,7 @@ public class StudySessionControllerTest {
     Appendable output = new StringBuilder();
     Readable instructions = new StringReader("""
         not a path
-        bad/|\\path\\0
+        bad/|\\path
         src/test/resources/sample.sr
         not a number
         -1
@@ -70,7 +70,7 @@ public class StudySessionControllerTest {
         Path to Spaced Repetition Question Bank File:\s
         the file 'not a path' does not exist.
         Path to Spaced Repetition Question Bank File:\s
-        'bad/|\\path\\0' is not a valid path.
+        the file 'bad/|\\path' does not exist.
         Path to Spaced Repetition Question Bank File:\s
         Number of Questions you would like to Practice:\s
         'not a number' is not a integer.

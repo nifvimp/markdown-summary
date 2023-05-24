@@ -77,7 +77,7 @@ public class StudySessionController implements Controller {
         questionBank = getQuestionBank();
       }
     } catch (InvalidPathException e) {
-      view.promptUser(String.format("'%s' is not a valid path.", path));
+      view.promptUser(String.format("the file '%s' does not exist.", path));
       questionBank = getQuestionBank();
     }
     return questionBank;
