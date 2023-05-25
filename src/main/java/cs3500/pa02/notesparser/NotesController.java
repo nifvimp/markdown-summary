@@ -25,7 +25,15 @@ public class NotesController implements Controller {
   public NotesController(Path root, OrderingFlag order, Path output) {
     this.root = root;
     this.order = order;
-    this.output = output;
+    this.output = stripFileExtension(output);
+  }
+
+  private Path stripFileExtension(Path output) {
+    int extensionIndex = output.toString().lastIndexOf('.');
+    if (extensionIndex < 0) {
+      return output;
+    }
+    return Path.of(output.toString().substring(0, extensionIndex));
   }
 
   /**

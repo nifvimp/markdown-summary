@@ -1,3 +1,4 @@
 What is the syntax to initialize an array:::Type[numberOfElements];:::HARD
 Are arrays modifiable?:::Yes, but only the elements, not the size of the array:::HARD
+What does \\R indicate?:::It signifies any line break character:::HARD
 What is the syntax for declaring a vector?:::Vector<type> v = new Vector();:::HARD

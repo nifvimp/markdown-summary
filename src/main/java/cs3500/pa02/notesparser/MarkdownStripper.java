@@ -3,6 +3,7 @@ package cs3500.pa02.notesparser;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -77,16 +78,16 @@ public class MarkdownStripper implements Extractor<List<String>> {
    * @throws IOException if an IOException occurs
    */
   private List<String> splitByHeaders(Path file, List<String> headers) throws IOException {
-    List<String> contents = new ArrayList<>();
+    String[] contents = new String[headers.size()];
+    int index = 0;
     String regex = (String.join("|", escapeAllRegexMetaCharacters(headers)));
     Scanner reader = new Scanner(file);
     reader.useDelimiter(regex);
     while (reader.hasNext()) {
-      String entry = reader.next().replaceAll("\\R+", " ");
-      contents.add(entry);
+      String entry = reader.next().replaceAll("\s*\\R+\s*", " ");
+      contents[index++] = entry;
     }
-    reader.close();
-    return contents;
+    return Arrays.stream(contents).map(str -> (str == null) ? "" : str).toList();
   }
 
   /**

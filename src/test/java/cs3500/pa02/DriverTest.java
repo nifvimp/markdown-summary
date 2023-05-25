@@ -26,7 +26,7 @@ public class DriverTest {
     Driver.main(new String[] {
         "src/test/resources/pa01Test",
         "FILENAME",
-        "src/test/resources/studyGuide"
+        "src/test/resources/studyGuide.md"
     });
     String studyGuide;
     Set<String> questionBank;

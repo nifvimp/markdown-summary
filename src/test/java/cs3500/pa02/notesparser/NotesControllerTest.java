@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
  */
 public class NotesControllerTest {
   private static final Path NOTES = Path.of("src/test/resources/notes");
-  private static final Path OUTPUT = Path.of("src/test/resources/studyGuide");
+  private static final Path OUTPUT = Path.of("src/test/resources/studyGuide.md");
   private static final Path STUDY_GUIDE = Path.of("src/test/resources/studyGuide.md");
   private static final Path SPACED_REPETITION = Path.of("src/test/resources/studyGuide.sr");
   private static final Path ARRAYS = Path.of("src/test/resources/notes/arrays.md");

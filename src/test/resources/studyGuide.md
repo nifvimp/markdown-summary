@@ -11,6 +11,14 @@
 - numberOfElements must be a positive Integer.
 - Gotcha: Array size is not modifiable once instantiated.
 
+## Formatting is Important
+- formatting is a way of life
+
+## Formatting ::: is for pros!?
+
+# Regex is very powerful
+- Use it well, and you got infinite power!
+
 # Vectors
 - Vectors act like resizable arrays
 
